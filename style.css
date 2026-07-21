@@ -1,0 +1,411 @@
+.dt_wrapper {
+   position: fixed;
+   width: 100%;
+   height: 100vh;
+   background-color: rgba(0, 0, 0, 0.6);
+   left: 0;
+   top: 0;
+   backdrop-filter: blur(5px);
+   align-items: center;
+   justify-content: center;
+   z-index: 999;
+   opacity: 1;
+   transition:
+      opacity 0.4s ease,
+      transform 0.4s ease;
+}
+
+.dt_popup {
+   max-width: 850px;
+   background-image: url("https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a5c93c5ab67c490e7bb09df_popup_img.png");
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-position: bottom;
+   background-attachment: local;
+   border-radius: 10px;
+   max-height: 90vh;
+   overflow: auto;
+   padding: 80px;
+   position: relative;
+   padding-bottom: 150px;
+}
+
+.dt_popup_final {
+   background-image: url("https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a5e074dc9f2ccc48ffad79b_dt_popup.png");
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: cover;
+}
+
+.dt_popup_final {
+   padding-top: 60px;
+   padding-bottom: 60px;
+   height: auto;
+   text-align: center;
+}
+
+.dtf_cnt img {
+   display: inline-block;
+   width: 150px;
+}
+
+.dt_popup_cross {
+   display: inline-block;
+   border: 0;
+   outline: none;
+   padding: 0;
+   background-color: transparent;
+   cursor: pointer;
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   transition: all 0.2s ease;
+}
+
+.dt_popup_cross img {
+   display: inline-block;
+   width: 26px;
+   cursor: pointer;
+}
+
+.dt_popup_cross:hover {
+   opacity: 0.7;
+}
+
+.dt_popup_cnt {
+   text-align: center;
+}
+
+.dt_popup_cnt p,
+.dtf_cnt_para {
+   font-size: 17px;
+   color: #1e1e1e;
+   margin-top: 22px;
+   line-height: 22px;
+}
+
+.dtf_cnt_para.para_red {
+   color: #ff5d47;
+   font-weight: bold;
+}
+
+/* ── Leg blocks ───────────────────────────────── */
+.dtp_leg_badge {
+   display: inline-block;
+   background: #5d5d5d;
+   color: #fff;
+   padding: 10px 28px;
+   border-radius: 20px;
+   font-size: 18px;
+   font-weight: 600;
+   margin-top: 16px;
+   margin-bottom: 10px;
+}
+
+.dtp_leg_fields {
+   display: flex;
+   gap: 16px;
+}
+
+.dtp_date_field,
+.dtp_time_field {
+   flex: 1;
+   position: relative;
+}
+
+.dtp_date_field label,
+.dtp_time_field label {
+   display: block;
+   font-size: 17px;
+   font-weight: 700;
+   letter-spacing: 1px;
+   text-transform: uppercase;
+   color: #1e1e1e;
+   margin-bottom: 5px;
+   text-align: left;
+}
+
+.dtp_date_field input,
+.dtp_time_field input {
+   width: 100%;
+   padding: 0px 16px;
+   border: 1.5px solid #d0d5dd;
+   border-radius: 8px;
+   font-size: 16px;
+   color: #8c8c8c;
+   background: #fff;
+   cursor: pointer;
+   outline: none;
+   height: 54px;
+}
+
+.dtp_date_input_wrapper {
+   position: relative;
+   display: flex;
+   align-items: center;
+}
+
+.dtp_date_input_wrapper input {
+   padding-right: 48px;
+}
+
+.dtp_date_icon {
+   position: absolute;
+   right: 16px;
+   top: 50%;
+   transform: translateY(-50%);
+   width: 22px;
+   height: 22px;
+   cursor: pointer;
+   pointer-events: auto;
+   opacity: 0.6;
+}
+
+.dtp_time_input_wrapper {
+   position: relative;
+   display: flex;
+   align-items: center;
+}
+
+.dtp_time_input_wrapper input {
+   padding-right: 48px;
+}
+
+.dtp_time_icon {
+   position: absolute;
+   right: 16px;
+   top: 50%;
+   transform: translateY(-50%);
+   width: 22px;
+   height: 22px;
+   cursor: pointer;
+   pointer-events: auto;
+   opacity: 0.6;
+}
+
+.dtp_flight_heading {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   column-gap: 10px;
+   margin-top: 22px;
+}
+
+.dtp_flight_bar {
+   display: block;
+   width: 100%;
+   height: 3px;
+   background-color: #fff;
+}
+
+.dtp_flight_heading h3 {
+   flex-shrink: 0;
+   font-size: 20px;
+   color: #1e1e1e;
+   letter-spacing: 1px;
+   text-transform: uppercase;
+}
+
+.dtp_leg_block {
+   text-align: center;
+}
+
+/* ── Time dropdown ────────────────────────────── */
+
+.time-dropdown {
+   position: absolute;
+   top: calc(100% + 4px);
+   left: 0;
+   width: 100%;
+   background: #fff;
+   border: 1px solid #e5e7eb;
+   border-radius: 10px;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+   max-height: 250px;
+   overflow-y: auto;
+   z-index: 1000;
+}
+
+.time-reset {
+   padding: 12px 18px;
+   color: #ff5d47;
+   font-weight: 700;
+   font-size: 14px;
+   cursor: pointer;
+   border-bottom: 1px solid #e5e7eb;
+   text-align: center;
+   position: sticky;
+   top: 0;
+   background: #fff;
+}
+
+.time-reset:hover {
+   background: #fef2f2;
+}
+
+.time-slot {
+   padding: 11px 18px;
+   cursor: pointer;
+   font-size: 15px;
+   color: #374151;
+}
+
+.time-slot:hover {
+   background: #ff5d47;
+   color: #fff;
+}
+
+.time-slot.selected {
+   background: #ff5d47;
+   color: #fff;
+}
+
+/* ── Calendar dropdown ──── */
+
+.dtp_calendar_dropdown {
+   position: absolute;
+   top: calc(100% + 4px);
+   left: 0;
+   width: 100%;
+   min-width: 300px;
+   z-index: 1000;
+}
+
+.dtp_calendar_dropdown .calendar-wrapper {
+   background-color: #fff;
+   border-radius: 12px;
+   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+   margin-top: 0;
+}
+
+.dtp_calendar_dropdown .month-nav {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 10px 20px;
+}
+
+.dtp_calendar_dropdown .month-nav button {
+   display: inline-block;
+   flex-shrink: 0;
+   border: 0;
+   outline: none;
+   padding: 0;
+   background-color: transparent;
+   cursor: pointer;
+}
+
+.dtp_calendar_dropdown .month-nav button img {
+   display: inline-block;
+   width: 24px;
+}
+
+.dtp_calendar_dropdown .month-nav h3 {
+   font-size: 14px;
+   font-weight: bold;
+   text-transform: uppercase;
+   letter-spacing: 1.5px;
+   color: #03141b;
+}
+
+.dtp_calendar_dropdown .days-header {
+   display: grid;
+   grid-template-columns: repeat(7, 1fr);
+   text-align: center;
+   border-top: 1px solid #cccccc;
+   border-bottom: 1px solid #cccccc;
+   padding: 8px 2px;
+}
+
+.dtp_calendar_dropdown .days-header span {
+   display: inline-block;
+   font-size: 12px;
+   font-weight: bold;
+   line-height: 1;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   color: #03141b;
+}
+
+.dtp_calendar_dropdown .days-grid {
+   display: grid;
+   grid-template-columns: repeat(7, 1fr);
+   list-style: none;
+   gap: 8px;
+   padding: 12px;
+   margin: 0;
+}
+
+.dtp_calendar_dropdown .days-grid li {
+   background-color: #e8e8e8;
+   color: #333;
+   height: 40px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 8px;
+   font-size: 13px;
+   font-weight: 600;
+   cursor: pointer;
+}
+
+.dtp_calendar_dropdown .days-grid li.disabled {
+   color: #797979;
+   background-color: #f3f3f3;
+   cursor: not-allowed;
+}
+
+.dtp_calendar_dropdown .days-grid li.prev-month-day {
+   color: #797979;
+   background-color: #f3f3f3;
+   font-weight: bold;
+}
+
+.dtp_calendar_dropdown .days-grid li.active {
+   background-color: #03141b !important;
+   color: #ff5d47 !important;
+}
+
+.dt_popbtn {
+   display: flex;
+   gap: 16px;
+   justify-content: space-between;
+   margin-top: 20px;
+}
+
+.dt_popbtn button {
+   width: 100%;
+}
+
+#dt_submit_btn {
+   white-space: nowrap;
+}
+
+#dt_cancel_btn,
+#final_cancel_dth {
+   background-color: transparent;
+}
+
+#dt_cancel_btn:hover,
+#final_cancel_dth:hover {
+   background-color: #000000;
+}
+
+.dt_final_para p {
+   text-align: center;
+   font-size: 17px;
+   color: #1e1e1e;
+   font-style: italic;
+   margin-top: 20px;
+}
+
+.dtf_cnt h2 {
+   margin: 30px 0px;
+}
+
+.dtf_btn {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-top: 25px;
+}

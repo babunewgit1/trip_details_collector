@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+      <link rel="stylesheet" href="style.css" />
+   </head>
+   <body>
+      <div class="dt_wrapper">
+         <div class="dt_popup">
+            <button class="dt_popup_cross" id="dt_popup_close">
+               <img
+                  src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a4f4a2e71a788359c6a6cbf_cross.png"
+                  alt=""
+               />
+            </button>
+            <div class="dt_popup_cnt">
+               <h2
+                  class="heading2 imc-heading airport-access-and-convenience _80--width inc_width"
+               >
+                  <span class="hlight">This </span> Aircraft Requires <br />
+                  <span class="hlight">a Quote Request </span>
+               </h2>
+               <p>This aircraft category cannot be booked instantly online.</p>
+               <p>
+                  Due to the nature of
+                  <b
+                     >cargo, group charter, helicopter, medevac and VIP
+                     aircraft,</b
+                  >
+                  availability, routing, operating limitations and pricing must
+                  first be confirmed directly with operators.
+               </p>
+               <p>
+                  Please provide your preferred departure date and time for each
+                  flight leg below. Once submitted, our charter team will source
+                  available aircraft, confirm availability and send you the best
+                  options as quickly as possible.
+               </p>
+            </div>
+            <div class="dt_popup_flight">
+               <div class="dtp_flight_heading">
+                  <div class="dtp_flight_bar"></div>
+                  <h3>Flight Schedule</h3>
+                  <div class="dtp_flight_bar"></div>
+               </div>
+               <div class="dt_popup_flight_form"></div>
+               <div class="dt_popbtn">
+                  <button
+                     id="dt_cancel_btn"
+                     data-wf--button--variant="black_white"
+                     class="button w-variant-caebc18c-8e8a-b41d-5384-576e1d07c2ae full-width w-button"
+                  >
+                     Cancel
+                  </button>
+                  <button id="dt_submit_btn" class="button fill_button">
+                     Request Aircraft Options
+                  </button>
+               </div>
+               <div class="dt_final_para">
+                  <p>
+                     (Repeat dynamically for every flight leg already in the
+                     itinerary.)
+                  </p>
+               </div>
+            </div>
+         </div>
+         <div class="dt_popup dt_popup_final">
+            <button class="dt_popup_cross" id="dt_popup_close">
+               <img
+                  src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a4f4a2e71a788359c6a6cbf_cross.png"
+                  alt=""
+               />
+            </button>
+            <div class="dtf_cnt">
+               <img
+                  src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a5e04d2ffb01be093b29e75_check_oval.png"
+                  alt="image icon"
+               />
+               <h2
+                  class="heading2 imc-heading airport-access-and-convenience _80--width inc_width"
+               >
+                  Request Received
+               </h2>
+               <p class="dtf_cnt_para para_red">
+                  Thanks! Your request has been submitted successfully.
+               </p>
+               <p class="dtf_cnt_para">
+                  Our charter team is now sourcing aircraft that meet your
+                  itinerary <br />
+                  and operational requirements.
+               </p>
+               <p class="dtf_cnt_para">
+                  You'll receive available aircraft options, pricing and
+                  estimated confirmation times as soon as operators begin
+                  responding. Most requests receive initial options within
+                  <b>30–60 minutes during business hours,</b> although more
+                  specialized aircraft may take longer.
+               </p>
+               <p class="dtf_cnt_para">
+                  If we require any additional information, one of our charter
+                  <br />
+                  specialists will contact you.
+               </p>
+            </div>
+            <div class="dtf_btn">
+               <button
+                  id="final_cancel_dth"
+                  data-wf--button--variant="black_white"
+                  class="button w-variant-caebc18c-8e8a-b41d-5384-576e1d07c2ae full-width w-button final_cancel_btn"
+               >
+                  Cancel
+               </button>
+            </div>
+         </div>
+      </div>
+
+      <!-- Quote Popup Toast -->
+      <div class="np-toast-container">
+         <div id="dtToast" class="np-toast" role="alert" style="display: none">
+            <div class="np-toast-body" id="dtToastMessage"></div>
+         </div>
+      </div>
+   </body>
+</html>
