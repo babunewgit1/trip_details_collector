@@ -1988,7 +1988,7 @@ button.save-pax-btn {
 
 .time-dropdown {
    position: absolute;
-   top: calc(100% + 4px);
+   bottom: calc(100% + 4px);
    left: 0;
    width: 100%;
    background: #fff;
@@ -2038,7 +2038,7 @@ button.save-pax-btn {
 
 .dtp_calendar_dropdown {
    position: absolute;
-   top: calc(100% + 4px);
+   bottom: calc(100% + 4px);
    left: 0;
    width: 100%;
    min-width: 300px;

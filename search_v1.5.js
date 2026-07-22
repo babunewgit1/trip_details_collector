@@ -804,10 +804,7 @@ function renderPage(page, filteredSets) {
             "helicopter",
             "vip",
          ];
-         const currentClassification =
-            tripClassification ||
-            sessionStorage.getItem("tripClassification") ||
-            "";
+         const currentClassification = tripClassification || "";
 
          if (specialCategories.includes(currentClassification)) {
             // Show the quote request popup
@@ -4216,14 +4213,13 @@ function initialize() {
       .then((response) => response.json())
       .then((responseData) => {
          apiData = responseData;
+         console.log("API Response:", apiData);
          longestFlight = apiData.response.longest_flight_leg;
          flightRequestId = apiData.response.flightrequest;
 
-         // Save trip classification for popup check
          tripClassification = (
             apiData.response.trip_classification || ""
          ).toLowerCase();
-         sessionStorage.setItem("tripClassification", tripClassification);
 
          // Save flightRequestId in sessionStorage as an array
          let storedFlightIds = JSON.parse(
@@ -4717,6 +4713,11 @@ function initQuotePopup(details) {
       // Initially show only 1st popup
       if (firstPopup) firstPopup.style.display = "block";
       if (secondPopup) secondPopup.style.display = "none";
+
+      // Set dynamic category name
+      const dyname = wrapper.querySelector(".dyname");
+      if (dyname) dyname.textContent = tripClassification;
+
       wrapper.style.display = "flex";
       wrapper.style.opacity = "1";
       wrapper.style.transform = "scale(1)";
@@ -4732,15 +4733,8 @@ function initQuotePopup(details) {
 
    function closeAllPopups() {
       if (wrapper) {
-         wrapper.style.transition = "opacity 0.3s ease, transform 0.3s ease";
-         wrapper.style.opacity = "0";
-         wrapper.style.transform = "scale(0.85)";
-         setTimeout(() => {
-            wrapper.style.display = "none";
-            wrapper.style.opacity = "1";
-            wrapper.style.transform = "scale(1)";
-            document.body.style.overflow = "";
-         }, 300);
+         wrapper.style.display = "none";
+         document.body.style.overflow = "";
       }
    }
 
@@ -4778,7 +4772,7 @@ function initQuotePopup(details) {
             return;
          }
 
-         // ── Build date_as_text and date arrays ─────────────────
+         // ── Read date/time directly from popup inputs ──────────
 
          function dateTimeToUnix(dateStr, timeStr) {
             const [y, mo, d] = dateStr.split("-").map(Number);
@@ -4800,61 +4794,25 @@ function initQuotePopup(details) {
             });
          }
 
-         // Read latest storeData from sessionStorage
-         const stored = JSON.parse(sessionStorage.getItem("storeData") || "{}");
+         const allDateInputs = container.querySelectorAll(".store-date-input");
+         const allTimeInputs = container.querySelectorAll(
+            ".departure-time-input",
+         );
 
          let dateAsTextArray = [];
          let dateTimestampArray = [];
 
-         if (isMultiCity) {
-            const dates = Array.isArray(stored.dateAsText)
-               ? stored.dateAsText
-               : [stored.dateAsText];
-            const times = Array.isArray(stored.timeAsText)
-               ? stored.timeAsText
-               : [stored.timeAsText];
-            dateAsTextArray = dates.map((dt, i) =>
-               dateTimeToText(dt, times[i] || "00:00:00"),
-            );
-            dateTimestampArray = dates.map((dt, i) =>
-               dateTimeToUnix(dt, times[i] || "00:00:00"),
-            );
-         } else if (isRoundTrip) {
-            dateAsTextArray = [
-               dateTimeToText(stored.dateAsText, stored.timeAsText),
-               dateTimeToText(
-                  stored.returnDateAsText,
-                  stored.returnTimeAsText || stored.timeAsTextReturn,
-               ),
-            ];
-            dateTimestampArray = [
-               dateTimeToUnix(stored.dateAsText, stored.timeAsText),
-               dateTimeToUnix(
-                  stored.returnDateAsText,
-                  stored.returnTimeAsText || stored.timeAsTextReturn,
-               ),
-            ];
-         } else {
-            // One way
-            dateAsTextArray = [
-               dateTimeToText(stored.dateAsText, stored.timeAsText),
-            ];
-            dateTimestampArray = [
-               dateTimeToUnix(stored.dateAsText, stored.timeAsText),
-            ];
-         }
+         allDateInputs.forEach((dateInput, i) => {
+            const dateVal = dateInput.getAttribute("data-date-value");
+            const timeVal = time12to24(allTimeInputs[i]?.value || "");
+            dateAsTextArray.push(dateTimeToText(dateVal, timeVal));
+            dateTimestampArray.push(dateTimeToUnix(dateVal, timeVal));
+         });
 
          // ── Send API request ───────────────────────────────────
 
          const authToken = Cookies.get("authToken");
          const reqFlightId = flightRequestId || "";
-
-         // Log data before sending
-         console.log("Sending quote request:", {
-            date_as_text: dateAsTextArray,
-            date: dateTimestampArray,
-            flightrequestid: reqFlightId,
-         });
 
          // Disable button while loading
          const originalText = submitBtn.textContent;
@@ -4880,7 +4838,6 @@ function initQuotePopup(details) {
             );
 
             const result = await response.json();
-            console.log("data send", result);
 
             // Success → show 2nd popup (confirmation)
             if (firstPopup) firstPopup.style.display = "none";
@@ -5034,7 +4991,6 @@ function initQuotePopup(details) {
                input.value = formatDateDisplay(dateStr);
                input.setAttribute("data-date-value", dateStr);
                dropdown.style.display = "none";
-               syncDateToSession(input);
             });
          });
       }
@@ -5133,99 +5089,13 @@ function initQuotePopup(details) {
          if (e.target.classList.contains("time-slot")) {
             input.value = e.target.textContent;
             dropdown.style.display = "none";
-            syncTimeToSession(input);
          }
          if (e.target.classList.contains("time-reset")) {
             input.value = "";
             dropdown.style.display = "none";
-            syncTimeToSession(input);
          }
       });
    });
-
-   // ── Sync date to sessionStorage ─────────────────────────────
-
-   function toUnix(dateStr, timeStr) {
-      const [y, mo, d] = dateStr.split("-").map(Number);
-      const [h, mi, s] = (timeStr || "00:00:00").split(":").map(Number);
-      return Date.UTC(y, mo - 1, d, h, mi, s);
-   }
-
-   function syncDateToSession(dateInput) {
-      const legIndex = parseInt(dateInput.getAttribute("data-leg-index"), 10);
-      const newDate = dateInput.getAttribute("data-date-value");
-      const stored = JSON.parse(sessionStorage.getItem("storeData") || "{}");
-
-      if (isOneWay) {
-         stored.dateAsText = newDate;
-         stored.appDate = newDate;
-         stored.timeStamp = toUnix(newDate, stored.timeAsText);
-      } else if (isRoundTrip) {
-         if (legIndex === 0) {
-            stored.dateAsText = newDate;
-            stored.appDate = newDate;
-            stored.timeStamp = toUnix(newDate, stored.timeAsText);
-         } else {
-            stored.returnDateAsText = newDate;
-            stored.appDateReturn = newDate;
-            stored.timeStampReturn = toUnix(
-               newDate,
-               stored.returnTimeAsText || stored.timeAsTextReturn,
-            );
-         }
-      } else if (isMultiCity) {
-         if (!Array.isArray(stored.dateAsText))
-            stored.dateAsText = [stored.dateAsText];
-         if (!Array.isArray(stored.appDate)) stored.appDate = [stored.appDate];
-         if (!Array.isArray(stored.timeStamp))
-            stored.timeStamp = [stored.timeStamp];
-
-         const times = Array.isArray(stored.timeAsText)
-            ? stored.timeAsText
-            : [stored.timeAsText];
-
-         stored.dateAsText[legIndex] = newDate;
-         stored.appDate[legIndex] = newDate;
-         stored.timeStamp[legIndex] = toUnix(newDate, times[legIndex]);
-      }
-
-      sessionStorage.setItem("storeData", JSON.stringify(stored));
-   }
-
-   // ── Sync time to sessionStorage ─────────────────────────────
-
-   function syncTimeToSession(timeInput) {
-      const legIndex = parseInt(timeInput.getAttribute("data-leg-index"), 10);
-      const newTime = time12to24(timeInput.value);
-      const stored = JSON.parse(sessionStorage.getItem("storeData") || "{}");
-
-      if (isOneWay) {
-         stored.timeAsText = newTime;
-         stored.timeStamp = toUnix(stored.dateAsText, newTime);
-      } else if (isRoundTrip) {
-         if (legIndex === 0) {
-            stored.timeAsText = newTime;
-            stored.timeStamp = toUnix(stored.dateAsText, newTime);
-         } else {
-            stored.returnTimeAsText = newTime;
-            stored.timeStampReturn = toUnix(stored.returnDateAsText, newTime);
-         }
-      } else if (isMultiCity) {
-         if (!Array.isArray(stored.timeAsText))
-            stored.timeAsText = [stored.timeAsText];
-         if (!Array.isArray(stored.timeStamp))
-            stored.timeStamp = [stored.timeStamp];
-
-         const dates = Array.isArray(stored.dateAsText)
-            ? stored.dateAsText
-            : [stored.dateAsText];
-
-         stored.timeAsText[legIndex] = newTime;
-         stored.timeStamp[legIndex] = toUnix(dates[legIndex], newTime);
-      }
-
-      sessionStorage.setItem("storeData", JSON.stringify(stored));
-   }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
