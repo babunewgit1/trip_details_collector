@@ -1,0 +1,357 @@
+.emform {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 16px;
+   align-items: flex-end;
+}
+
+.eminputblock label {
+   display: block;
+   font-size: 14px;
+   font-weight: 700;
+   text-transform: uppercase;
+   margin-bottom: 5px;
+}
+
+.eminputblock input {
+   display: block;
+   width: 100%;
+   border: 0;
+   outline: none;
+   padding: 14px 36px 14px 14px;
+   border-radius: 10px;
+}
+
+.eminput_field {
+   position: relative;
+}
+
+.eminput_field img {
+   display: inline-block;
+   width: 16px;
+   position: absolute;
+   right: 0;
+   top: 50%;
+   transform: translate(-50%, -50%);
+}
+
+.empax_wrapper {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.empax_minus,
+.empax_plus {
+   font-size: 30px;
+   width: 22px;
+   height: 22px;
+   background-color: #72706d;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: #fff;
+   border-radius: 50%;
+   line-height: 1;
+   padding-bottom: 10px;
+   font-weight: bold;
+   cursor: pointer;
+}
+
+.empax_minus {
+   padding-top: 10px;
+}
+
+.empax_plus {
+   font-size: 20px;
+   padding-top: 12px;
+}
+
+.empax_wrapper input {
+   width: calc(100% - 60px);
+}
+
+.emsubmit span {
+   display: block;
+   width: auto;
+   background-color: #ff5d47;
+   text-align: center;
+   font-size: 16px;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   border-radius: 10px;
+   color: #fff;
+   font-weight: bold;
+   padding: 14px 20px;
+   cursor: pointer;
+}
+
+.uniqueid {
+   display: none;
+}
+
+.eminputblock {
+   position: relative;
+}
+
+.expaxinput {
+   text-align: center;
+}
+
+.search-results {
+   background-color: #fff;
+   max-height: 300px;
+   border-radius: 12px;
+   overflow-x: hidden;
+   overflow-y: auto;
+   position: absolute;
+   left: 0;
+   top: 75px;
+   z-index: 99;
+   width: 365px;
+}
+
+.emfieldnamewrapper {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   border-bottom: 1px solid #ddd;
+   padding: 12px;
+   margin: 0;
+   background-color: #fff;
+   transition: all 0.3s;
+   cursor: pointer;
+}
+
+.emfieldnamewrapper p {
+   margin: 0;
+}
+
+.emfieldnamewrapper img {
+   display: inline-block;
+   width: 24px;
+}
+
+p.uniqueid {
+   display: none;
+}
+
+.emfieldnamewrapper:hover {
+   background-color: #ddd;
+}
+
+.portid {
+   display: none;
+}
+
+.algolio_submit {
+   margin-top: 20px;
+   display: flex;
+   align-items: flex-end;
+   justify-content: space-between;
+}
+
+.change_grid .emform {
+   grid-template-columns: repeat(5, 1fr);
+}
+
+.add-search-input {
+   margin-right: 20px;
+}
+
+.algolio_length {
+   margin-bottom: 15px;
+}
+
+.remove {
+   display: inline-block;
+   cursor: pointer;
+   transition: all 0.3s ease;
+}
+
+.remove img {
+   display: inline-block;
+   width: 45px;
+}
+
+.remove:hover {
+   opacity: 0.7;
+}
+
+.multicity_data input {
+   pointer-events: none;
+   cursor: not-allowed;
+}
+
+.multicity_data .empax_minus,
+.multicity_data .empax_plus {
+   pointer-events: none;
+   cursor: not-allowed;
+}
+
+.multicity_data .eminput_field {
+   cursor: not-allowed;
+}
+
+.multicity_data .emform {
+   margin-bottom: 16px;
+}
+
+.noentry span {
+   background-color: #72706d;
+   cursor: not-allowed;
+}
+
+.generated {
+   position: relative;
+   padding-right: 80px;
+}
+
+.remove {
+   position: absolute;
+   bottom: 0;
+   right: 0;
+   z-index: 99;
+}
+
+.onwaygrid {
+   grid-template-columns: repeat(4, 1fr) !important;
+}
+
+.opadet_bottom_heading ul li {
+   color: #03141b !important;
+}
+
+img.mbcross {
+   display: none;
+}
+
+/* ===== Aircraft Type Radio Pills ===== */
+
+.tcradio {
+   flex: 1;
+   margin-right: 20px;
+}
+
+.tcradio_label label {
+   letter-spacing: 0.0625rem;
+   text-transform: uppercase;
+   font-size: 1.0625rem;
+   font-weight: 700;
+   margin-bottom: 10px;
+}
+
+.tcradio_item_wrapper {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 6px;
+   align-items: center;
+}
+
+.tcradio_item {
+   position: relative;
+}
+
+/* Hide the native radio input */
+.aircraft_radio {
+   position: absolute;
+   opacity: 0;
+   width: 0;
+   height: 0;
+   pointer-events: none;
+}
+
+/* Pill label styling */
+.aircraft_pill {
+   display: inline-flex;
+   align-items: center;
+   gap: 5px;
+   padding: 12px 15px;
+   border: 1px solid #000000;
+   border-radius: 10px;
+   cursor: pointer;
+   transition: all 0.25s ease;
+   background-color: transparent;
+   white-space: nowrap;
+   user-select: none;
+   margin-bottom: 0;
+}
+
+.aircraft_pill img {
+   width: 22px !important;
+   height: auto;
+   display: inline-block;
+   position: static;
+   transform: none;
+   opacity: 0.65;
+   transition: opacity 0.25s ease;
+}
+
+.aircraft_pill span {
+   font-size: 14px;
+   font-weight: 600;
+   text-transform: uppercase;
+   letter-spacing: 0.8px;
+   color: #02121a;
+}
+
+.aircraft_pill:hover {
+   background-color: #fff;
+   border-color: #ff5d47;
+}
+
+.aircraft_pill:hover span {
+   color: #ff5d47;
+}
+
+.aircraft_radio:checked + .aircraft_pill {
+   background-color: #fff;
+   border-color: #ff5d47;
+}
+
+.aircraft_radio:checked + .aircraft_pill img {
+   opacity: 1;
+}
+
+.aircraft_radio:checked + .aircraft_pill span {
+   color: #ff5d47;
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+   .aircraft_pill {
+      padding: 8px 10px;
+      border-radius: 6px;
+   }
+
+   .algolio_submit {
+      align-items: flex-start;
+   }
+
+   .hmtbcnt_one .algolio_submit {
+      display: flex !important;
+   }
+}
+
+@media screen and (max-width: 767px) {
+   .aircraft_pill img {
+      width: 15px !important;
+   }
+
+   .aircraft_pill {
+      padding: 8px 10px;
+      border-radius: 6px;
+   }
+
+   .algolio_submit {
+      align-items: flex-start;
+   }
+
+   .emsubmit {
+      width: 100%;
+      flex-shrink: 0;
+      margin-top: 20px;
+   }
+}

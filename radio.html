@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+   </head>
+   <body>
+      <div class="tab_list">
+         <ul>
+            <li id="onewayTab">One way</li>
+            <li id="roundwayTab">Round way</li>
+            <li id="multiwayTab">Multi way</li>
+         </ul>
+      </div>
+      <div class="tab_cnt_wrapper">
+         <div class="tab_cnt_item" data-tab="onewayTab">
+            <div class="algolio_wrapper change_grid algwrapper">
+               <form class="algolio_length" autocomplete="off">
+                  <div class="emform onwaygrid">
+                     <div class="eminputblock">
+                        <label>From</label>
+                        <div class="eminput_field">
+                           <input
+                              class="algolio_input onewayform"
+                              type="text"
+                           />
+                           <p class="portid onewayformid"></p>
+                           <p class="short_name oneway_fromshort_name"></p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6730586b420dae5eaf21e2eb_gps.png"
+                              alt="GPS Icon"
+                           />
+                        </div>
+                        <div class="search-results"></div>
+                     </div>
+                     <div class="eminputblock">
+                        <label>To</label>
+                        <div class="eminput_field">
+                           <input class="algolio_input onewayto" type="text" />
+                           <p class="portid onewaytoid"></p>
+                           <p class="short_name oneway_toshort_name"></p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6730586b420dae5eaf21e2eb_gps.png"
+                              alt="GPS Icon"
+                           />
+                        </div>
+                        <div class="search-results"></div>
+                     </div>
+                     <div class="eminputblock">
+                        <label>Date</label>
+                        <div class="eminput_field">
+                           <input class="onewaydate" type="date" />
+                        </div>
+                     </div>
+                     <div class="eminputblock">
+                        <label>PAX</label>
+                        <div class="eminput_field">
+                           <div class="empax_wrapper">
+                              <div class="empax_minus">-</div>
+                              <input
+                                 class="expaxinput onewaypax"
+                                 type="text"
+                                 value="1"
+                                 readonly
+                              />
+                              <div class="empax_plus">+</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <div class="algolio_submit oneway_tcradio">
+               <div class="tcradio">
+                  <div class="tcradio_label">
+                     <label>type of AIRCRAFT</label>
+                  </div>
+                  <div class="tcradio_item_wrapper oneway_tcradio">
+                     <div class="tcradio_item">
+                        <input
+                           type="radio"
+                           name="oneway_aircraft_type"
+                           id="ow_opt_airplane"
+                           value="airplane"
+                           class="aircraft_radio"
+                           checked
+                        />
+                        <label for="ow_opt_airplane" class="aircraft_pill">
+                           <img
+                              style="width: 40px"
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61ede80f6b22d07b5da622_rd1.png"
+                              alt="radio icon"
+                           />
+                           <span>Airplane</span>
+                        </label>
+                     </div>
+                     <div class="tcradio_item">
+                        <input
+                           type="radio"
+                           name="oneway_aircraft_type"
+                           id="ow_opt_helicopter"
+                           value="helicopter"
+                           class="aircraft_radio"
+                        />
+                        <label for="ow_opt_helicopter" class="aircraft_pill">
+                           <img
+                              style="width: 40px"
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61ede821c5c636c66ba724_rd2.png"
+                              alt="radio icon"
+                           />
+                           <span>Helicopter</span>
+                        </label>
+                     </div>
+                     <div class="tcradio_item">
+                        <input
+                           type="radio"
+                           name="oneway_aircraft_type"
+                           id="ow_opt_group_charter"
+                           value="group"
+                           class="aircraft_radio"
+                        />
+                        <label for="ow_opt_group_charter" class="aircraft_pill">
+                           <img
+                              style="width: 40px"
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61ede99cb68c982cbd2a3e_rd3.png"
+                              alt="radio icon"
+                           />
+                           <span>Group Charter</span>
+                        </label>
+                     </div>
+                     <div class="tcradio_item">
+                        <input
+                           type="radio"
+                           name="oneway_aircraft_type"
+                           id="ow_opt_cargo"
+                           value="cargo"
+                           class="aircraft_radio"
+                        />
+                        <label for="ow_opt_cargo" class="aircraft_pill">
+                           <img
+                              style="width: 40px"
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61edea9cb68c982cbd2a4f_rd4.png"
+                              alt="radio icon"
+                           />
+                           <span>Cargo</span>
+                        </label>
+                     </div>
+                     <div class="tcradio_item">
+                        <input
+                           type="radio"
+                           name="oneway_aircraft_type"
+                           id="ow_opt_medevac"
+                           value="medevac"
+                           class="aircraft_radio"
+                        />
+                        <label for="ow_opt_medevac" class="aircraft_pill">
+                           <img
+                              style="width: 40px"
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61edea8e1221976484bddc_rd5.png"
+                              alt="radio icon"
+                           />
+                           <span>Medevac</span>
+                        </label>
+                     </div>
+                     <div class="tcradio_item">
+                        <input
+                           type="radio"
+                           name="oneway_aircraft_type"
+                           id="ow_opt_vip_airliner"
+                           value="vip"
+                           class="aircraft_radio"
+                        />
+                        <label for="ow_opt_vip_airliner" class="aircraft_pill">
+                           <img
+                              style="width: 40px"
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61eeabeca1ad665eb73762_rd61.png"
+                              alt="radio icon"
+                           />
+                           <span>VIP Airliner</span>
+                        </label>
+                     </div>
+                  </div>
+               </div>
+               <div class="emsubmit">
+                  <span class="onewaysubmit">Search</span>
+               </div>
+            </div>
+         </div>
+         <div class="tab_cnt_item" data-tab="roundwayTab">
+            <div class="algolio_wrapper change_grid">
+               <form class="algolio_length" autocomplete="off">
+                  <div class="emform twowaygrid">
+                     <div class="eminputblock">
+                        <label>From</label>
+                        <div class="eminput_field">
+                           <input class="algolio_input rfrom" type="text" />
+                           <p class="portid roundfromid"></p>
+                           <p class="short_name roundway_fromshort_name"></p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6730586b420dae5eaf21e2eb_gps.png"
+                              alt="GPS Icon"
+                           />
+                        </div>
+                        <div class="search-results"></div>
+                     </div>
+                     <div class="eminputblock">
+                        <label>To</label>
+                        <div class="eminput_field">
+                           <input class="algolio_input rto" type="text" />
+                           <p class="portid roundtoid"></p>
+                           <p class="short_name roundway_toshort_name"></p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6730586b420dae5eaf21e2eb_gps.png"
+                              alt="GPS Icon"
+                           />
+                        </div>
+                        <div class="search-results"></div>
+                     </div>
+                     <div class="eminputblock">
+                        <label>DEPARTURE DATE</label>
+                        <div class="eminput_field">
+                           <input class="rdepdate" type="date" />
+                        </div>
+                     </div>
+                     <div class="eminputblock">
+                        <label>RETURN DATE</label>
+                        <div class="eminput_field">
+                           <input class="rretdate" type="date" />
+                        </div>
+                     </div>
+                     <div class="eminputblock">
+                        <label>PAX</label>
+                        <div class="eminput_field">
+                           <div class="empax_wrapper">
+                              <div class="empax_minus">-</div>
+                              <input
+                                 class="expaxinput rpax"
+                                 type="text"
+                                 value="1"
+                                 readonly
+                              />
+                              <div class="empax_plus">+</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <div class="algolio_submit">
+               <div class="tcradio round_tcradio">
+                  <div class="tcradio_label">
+                     <label>type of AIRCRAFT</label>
+                  </div>
+                  <div class="tcradio_item_wrapper">
+                     <div class="tcradio_item">
+                        <input
+                           type="radio"
+                           name="roundway_aircraft_type"
+                           id="rw_opt_airplane"
+                           value="airplane"
+                           class="aircraft_radio"
+                           checked
+                        />
+                        <label for="rw_opt_airplane" class="aircraft_pill">
+                           <img
+                              style="width: 40px"
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61ede80f6b22d07b5da622_rd1.png"
+                              alt="radio icon"
+                           />
+                           <span>Airplane</span>
+                        </label>
+                     </div>
+                     <div class="tcradio_item">
+                        <input
+                           type="radio"
+                           name="roundway_aircraft_type"
+                           id="rw_opt_helicopter"
+                           value="helicopter"
+                           class="aircraft_radio"
+                        />
+                        <label for="rw_opt_helicopter" class="aircraft_pill">
+                           <img
+                              style="width: 40px"
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61ede821c5c636c66ba724_rd2.png"
+                              alt="radio icon"
+                           />
+                           <span>Helicopter</span>
+                        </label>
+                     </div>
+                     <div class="tcradio_item">
+                        <input
+                           type="radio"
+                           name="roundway_aircraft_type"
+                           id="rw_opt_group_charter"
+                           value="group"
+                           class="aircraft_radio"
+                        />
+                        <label for="rw_opt_group_charter" class="aircraft_pill">
+                           <img
+                              style="width: 40px"
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61ede99cb68c982cbd2a3e_rd3.png"
+                              alt="radio icon"
+                           />
+                           <span>Group Charter</span>
+                        </label>
+                     </div>
+                     <div class="tcradio_item">
+                        <input
+                           type="radio"
+                           name="roundway_aircraft_type"
+                           id="rw_opt_cargo"
+                           value="cargo"
+                           class="aircraft_radio"
+                        />
+                        <label for="rw_opt_cargo" class="aircraft_pill">
+                           <img
+                              style="width: 40px"
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61edea9cb68c982cbd2a4f_rd4.png"
+                              alt="radio icon"
+                           />
+                           <span>Cargo</span>
+                        </label>
+                     </div>
+                     <div class="tcradio_item">
+                        <input
+                           type="radio"
+                           name="roundway_aircraft_type"
+                           id="rw_opt_medevac"
+                           value="medevac"
+                           class="aircraft_radio"
+                        />
+                        <label for="rw_opt_medevac" class="aircraft_pill">
+                           <img
+                              style="width: 40px"
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61edea8e1221976484bddc_rd5.png"
+                              alt="radio icon"
+                           />
+                           <span>Medevac</span>
+                        </label>
+                     </div>
+                     <div class="tcradio_item">
+                        <input
+                           type="radio"
+                           name="roundway_aircraft_type"
+                           id="rw_opt_vip_airliner"
+                           value="vip"
+                           class="aircraft_radio"
+                        />
+                        <label for="rw_opt_vip_airliner" class="aircraft_pill">
+                           <img
+                              style="width: 40px"
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61eeabeca1ad665eb73762_rd61.png"
+                              alt="radio icon"
+                           />
+                           <span>VIP Airliner</span>
+                        </label>
+                     </div>
+                  </div>
+               </div>
+               <div class="emsubmit">
+                  <span class="roundtrip">Search</span>
+               </div>
+            </div>
+         </div>
+         <div class="tab_cnt_item" data-tab="multiwayTab">
+            <div class="algolio_wrapper removeadded">
+               <form class="algolio_length" autocomplete="off">
+                  <div class="emform multicity-set threewaygrid">
+                     <div class="eminputblock">
+                        <label>From</label>
+                        <div class="eminput_field">
+                           <input
+                              class="algolio_input multicityform"
+                              type="text"
+                           />
+                           <p class="portid multicityformid"></p>
+                           <p class="short_name multiway_fromshort_name"></p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6730586b420dae5eaf21e2eb_gps.png"
+                              alt="GPS Icon"
+                           />
+                        </div>
+                        <div class="search-results"></div>
+                     </div>
+                     <div class="eminputblock">
+                        <label>To</label>
+                        <div class="eminput_field">
+                           <input
+                              class="algolio_input multicityto"
+                              type="text"
+                           />
+                           <p class="portid multicitytoid"></p>
+                           <p class="short_name multiway_toshort_name"></p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6730586b420dae5eaf21e2eb_gps.png"
+                              alt="GPS Icon"
+                           />
+                        </div>
+                        <div class="search-results"></div>
+                     </div>
+                     <div class="eminputblock">
+                        <label>Date</label>
+                        <div class="eminput_field">
+                           <input class="multicitydate" type="date" />
+                        </div>
+                     </div>
+                     <div class="eminputblock">
+                        <label>PAX</label>
+                        <div class="eminput_field">
+                           <div class="empax_wrapper">
+                              <div class="empax_minus">-</div>
+                              <input
+                                 class="expaxinput multicitypax"
+                                 type="text"
+                                 value="1"
+                                 readonly
+                              />
+                              <div class="empax_plus">+</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <div class="tcradio multi_tcradio">
+               <div class="tcradio_label">
+                  <label>type of AIRCRAFT</label>
+               </div>
+               <div class="tcradio_item_wrapper">
+                  <div class="tcradio_item">
+                     <input
+                        type="radio"
+                        name="multiway_aircraft_type"
+                        id="mw_opt_airplane"
+                        value="airplane"
+                        class="aircraft_radio"
+                        checked
+                     />
+                     <label for="mw_opt_airplane" class="aircraft_pill">
+                        <img
+                           style="width: 40px"
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61ede80f6b22d07b5da622_rd1.png"
+                           alt="radio icon"
+                        />
+                        <span>Airplane</span>
+                     </label>
+                  </div>
+                  <div class="tcradio_item">
+                     <input
+                        type="radio"
+                        name="multiway_aircraft_type"
+                        id="mw_opt_helicopter"
+                        value="helicopter"
+                        class="aircraft_radio"
+                     />
+                     <label for="mw_opt_helicopter" class="aircraft_pill">
+                        <img
+                           style="width: 40px"
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61ede821c5c636c66ba724_rd2.png"
+                           alt="radio icon"
+                        />
+                        <span>Helicopter</span>
+                     </label>
+                  </div>
+                  <div class="tcradio_item">
+                     <input
+                        type="radio"
+                        name="multiway_aircraft_type"
+                        id="mw_opt_group_charter"
+                        value="group"
+                        class="aircraft_radio"
+                     />
+                     <label for="mw_opt_group_charter" class="aircraft_pill">
+                        <img
+                           style="width: 40px"
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61ede99cb68c982cbd2a3e_rd3.png"
+                           alt="radio icon"
+                        />
+                        <span>Group Charter</span>
+                     </label>
+                  </div>
+                  <div class="tcradio_item">
+                     <input
+                        type="radio"
+                        name="multiway_aircraft_type"
+                        id="mw_opt_cargo"
+                        value="cargo"
+                        class="aircraft_radio"
+                     />
+                     <label for="mw_opt_cargo" class="aircraft_pill">
+                        <img
+                           style="width: 40px"
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61edea9cb68c982cbd2a4f_rd4.png"
+                           alt="radio icon"
+                        />
+                        <span>Cargo</span>
+                     </label>
+                  </div>
+                  <div class="tcradio_item">
+                     <input
+                        type="radio"
+                        name="multiway_aircraft_type"
+                        id="mw_opt_medevac"
+                        value="medevac"
+                        class="aircraft_radio"
+                     />
+                     <label for="mw_opt_medevac" class="aircraft_pill">
+                        <img
+                           style="width: 40px"
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61edea8e1221976484bddc_rd5.png"
+                           alt="radio icon"
+                        />
+                        <span>Medevac</span>
+                     </label>
+                  </div>
+                  <div class="tcradio_item">
+                     <input
+                        type="radio"
+                        name="multiway_aircraft_type"
+                        id="mw_opt_vip_airliner"
+                        value="vip"
+                        class="aircraft_radio"
+                     />
+                     <label for="mw_opt_vip_airliner" class="aircraft_pill">
+                        <img
+                           style="width: 40px"
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a61eeabeca1ad665eb73762_rd61.png"
+                           alt="radio icon"
+                        />
+                        <span>VIP Airliner</span>
+                     </label>
+                  </div>
+               </div>
+            </div>
+            <div class="algolio_submit">
+               <div class="emsubmit add-search-input">
+                  <span>ADD LEG</span>
+               </div>
+               <div class="emsubmit">
+                  <span class="multicity_submit">Search</span>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

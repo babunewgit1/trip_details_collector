@@ -4159,6 +4159,7 @@ function initialize() {
          date: sessionData.timeStamp,
          "leg_1_departure_include_nearby?": sessionData.isFromNearby,
          "leg_1_arrival_include_nearby?": sessionData.isToNearby,
+         trip_classification: sessionData.trip_classification,
       };
       apiUrl = apiUrlOneWay;
    } else if (way === "round trip") {
@@ -4182,6 +4183,7 @@ function initialize() {
          "leg_1_arrival_include_nearby?": sessionData.isToNearby,
          "leg_2_departure_include_nearby?": sessionData.isToNearby,
          "leg_2_arrival_include_nearby?": sessionData.isFromNearby,
+         trip_classification: sessionData.trip_classification,
       };
       apiUrl = apiUrlRoundTrip;
    } else if (way === "multi-city") {
@@ -4195,6 +4197,7 @@ function initialize() {
          date_as_text: sessionData.dateAsText,
          time_as_text: sessionData.timeAsText,
          App_Out_Date_As_Text: sessionData.appDate,
+         trip_classification: sessionData.trip_classification,
       };
       apiUrl = apiUrlMultiCity;
    } else {
