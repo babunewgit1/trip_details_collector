@@ -4206,6 +4206,8 @@ function initialize() {
       return;
    }
 
+   console.log("Sending API request:", { apiUrl, data });
+
    fetch(apiUrl, {
       method: "POST",
       headers: {
