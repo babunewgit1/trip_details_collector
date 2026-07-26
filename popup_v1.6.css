@@ -95,6 +95,7 @@
    left: 0;
    top: 0px;
    z-index: 992;
+   overflow: auto;
 }
 
 .ms_popup_box {
