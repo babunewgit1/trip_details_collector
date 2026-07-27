@@ -315,7 +315,7 @@
    background-color: #f3f3f3;
    position: fixed;
    width: 100%;
-   height: calc(100vh- 62.2px);
+   height: calc(100vh - 62.2px);
    left: 0;
    bottom: 0;
    z-index: 997;
