@@ -283,8 +283,6 @@ img.mbcross {
    display: inline-block;
    position: static;
    transform: none;
-   opacity: 0.65;
-   transition: opacity 0.25s ease;
 }
 
 .aircraft_pill span {
@@ -300,6 +298,11 @@ img.mbcross {
    border-color: #ff5d47;
 }
 
+.aircraft_pill:hover img {
+   filter: brightness(0) saturate(100%) invert(63%) sepia(98%) saturate(3932%)
+      hue-rotate(331deg) brightness(100%) contrast(102%);
+}
+
 .aircraft_pill:hover span {
    color: #ff5d47;
 }
@@ -307,10 +310,6 @@ img.mbcross {
 .aircraft_radio:checked + .aircraft_pill {
    background-color: #fff;
    border-color: #ff5d47;
-}
-
-.aircraft_radio:checked + .aircraft_pill img {
-   opacity: 1;
 }
 
 .aircraft_radio:checked + .aircraft_pill span {
