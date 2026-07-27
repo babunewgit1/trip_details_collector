@@ -312,6 +312,16 @@ img.mbcross {
    border-color: #ff5d47;
 }
 
+.aircraft_radio:checked + .aircraft_pill img {
+   filter: brightness(0) saturate(100%) invert(63%) sepia(98%) saturate(3932%)
+      hue-rotate(331deg) brightness(100%) contrast(102%);
+}
+
+.floating_popu .hmtrip_wrapper.opactity100.prit_minhieght-50vh {
+   background-color: #f0f0f0;
+   max-height: 50vh !important;
+}
+
 .aircraft_radio:checked + .aircraft_pill span {
    color: #ff5d47;
 }
