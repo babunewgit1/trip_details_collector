@@ -317,7 +317,7 @@ img.mbcross {
       hue-rotate(331deg) brightness(100%) contrast(102%);
 }
 
-.floating_popu .hmtrip_wrapper.opactity100.prit_minhieght-50vh {
+.floating_popup .hmtrip_wrapper.opactity100.prit_minhieght-50vh {
    background-color: #f0f0f0;
    max-height: 50vh !important;
 }
