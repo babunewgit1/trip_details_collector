@@ -93,7 +93,7 @@
    width: 100%;
    height: calc(100vh - 62.2px);
    left: 0;
-   top: 0px;
+   bottom: 0px;
    z-index: 992;
    overflow: auto;
 }
