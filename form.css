@@ -319,7 +319,11 @@ img.mbcross {
 
 .floating_popup .hmtrip_wrapper.opactity100.prit_minhieght-50vh {
    background-color: #f0f0f0;
-   max-height: 50vh !important;
+   max-height: 700px !important;
+}
+
+.floating_popup .search-results {
+   max-height: 230px;
 }
 
 .aircraft_radio:checked + .aircraft_pill span {
