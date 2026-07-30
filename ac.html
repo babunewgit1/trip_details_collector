@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+   </head>
+   <body>
+      <script src="https://jettlycdn.com/popup_v1.8.js"></script>
+      <script src="https://jettlycdn.com/search_v1.6.js"></script>
+      <script src="https://jettlycdn.com/result.js"></script>
+
+      <!-- Patch: fix null crash when .shortairportcode missing (popup uses .short_name) -->
+      <script>
+         document.addEventListener(
+            "click",
+            function (e) {
+               const port = e.target.closest(".port");
+               if (!port) return;
+               const block = port.closest(".eminputblock");
+               if (!block) return;
+               const shortVal =
+                  port.querySelector(".short-name")?.textContent ??
+                  port.querySelector(".shortname")?.textContent ??
+                  "";
+               const sn = block.querySelector(".short_name");
+               const sc = block.querySelector(".shortairportcode");
+               if (sn) sn.textContent = shortVal;
+               if (sc) sc.textContent = shortVal;
+            },
+            true,
+         );
+      </script>
+
+      <script>
+         // ── PRICE VISIBILITY ─────────────────────────────────────────────────────────
+         document.addEventListener("DOMContentLoaded", () => {
+            const isLoggedIn = () =>
+               Cookies.get("userEmail") && Cookies.get("authToken");
+
+            function updatePriceVisibility() {
+               const blurred = !isLoggedIn();
+               document
+                  .querySelectorAll(".item_book .price")
+                  .forEach((price) => {
+                     price.style.filter = blurred ? "blur(5px)" : "none";
+                     if (blurred) {
+                        price.style.userSelect = "none";
+                        price.style.webkitUserSelect = "none";
+                        price.style.msUserSelect = "none";
+                     }
+                  });
+            }
+
+            new MutationObserver((mutations) => {
+               if (mutations.some((m) => m.addedNodes.length))
+                  updatePriceVisibility();
+            }).observe(document.body, { childList: true, subtree: true });
+
+            updatePriceVisibility();
+         });
+
+         // ── PAX CONTROLS + ALGOLIA SEARCH ───────────────────────────────────────────
+         document.addEventListener("DOMContentLoaded", () => {
+            function initPaxBlock(wrapper) {
+               if (wrapper._paxFixedInit) return;
+               wrapper._paxFixedInit = true;
+
+               const input = wrapper.querySelector(".expaxinput");
+               const minus = wrapper.querySelector(".empax_minus");
+
+               // Capture phase listener on wrapper — fires BEFORE any other handler
+               wrapper.addEventListener(
+                  "click",
+                  (e) => {
+                     const isPlus = e.target.closest(".empax_plus");
+                     const isMinus = e.target.closest(".empax_minus");
+                     if (!isPlus && !isMinus) return;
+
+                     // Kill the event so no other handler runs
+                     e.stopPropagation();
+                     e.stopImmediatePropagation();
+
+                     if (isPlus) {
+                        const val = (parseInt(input.value) || 0) + 1;
+                        input.value = val;
+                        minus.classList.remove("disabled");
+                     }
+                     if (isMinus) {
+                        let val = parseInt(input.value) || 0;
+                        if (val > 0) {
+                           input.value = --val;
+                           minus.classList.toggle("disabled", val <= 0);
+                        }
+                     }
+                  },
+                  true,
+               ); // ← true = capture phase
+            }
+
+            document.querySelectorAll(".empax_wrapper").forEach(initPaxBlock);
+
+            const index = algoliasearch(
+               "ZSPO7HB4MN",
+               "2a3621a18dca4f1fb757e9ddaea72440",
+            ).initIndex("Airports");
+
+            const ICON_GPS =
+               "https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6730586b420dae5eaf21e2eb_gps.png";
+            const ICON_LOC =
+               "https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6739f54808efbe5ead7a23c1_Screenshot_1-removebg-preview.avif";
+            const ICON_CLOSE =
+               "https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6766e051a4e47b7d94159c59_x-square.svg";
+
+            function debounce(fn, delay) {
+               let t;
+               return (...args) => {
+                  clearTimeout(t);
+                  t = setTimeout(() => fn(...args), delay);
+               };
+            }
+
+            function escapeHTML(str) {
+               const d = document.createElement("div");
+               d.appendChild(document.createTextNode(str));
+               return d.innerHTML;
+            }
+
+            function renderHit(hit) {
+               const shortVal = escapeHTML(hit["AirportNameShort"] || "");
+               return `<div class="port" tabindex="0">
+        <div class="emfieldnamewrapper">
+          <img src="${ICON_LOC}" alt="Location Icon" />
+          <p class="emfieldname">${escapeHTML(hit["All Fields"])}</p>
+          <p class="uniqueid">${escapeHTML(hit["unique id"])}</p>
+          <p class="short-name" style="display:none;">${shortVal}</p>
+          <p class="shortname"  style="display:none;">${shortVal}</p>
+        </div>
+      </div>`;
+            }
+
+            function showResults(results, html) {
+               results.innerHTML = html;
+               results.style.display = "block";
+            }
+
+            function hideResults(wrapper) {
+               wrapper.querySelectorAll(".search-results").forEach((r) => {
+                  r.innerHTML = "";
+                  r.style.display = "none";
+               });
+            }
+
+            const handleInput = debounce(function (e) {
+               const input = e.target;
+               if (!input.classList.contains("algolio_input")) return;
+               if (input.dataset.skipSearch === "true") {
+                  delete input.dataset.skipSearch;
+                  return;
+               }
+
+               const block = input.closest(".eminputblock");
+               const results = block?.querySelector(".search-results");
+               if (!results) return;
+
+               const query = input.value.trim();
+               if (!query) {
+                  hideResults(block);
+                  return;
+               }
+
+               index
+                  .search(query)
+                  .then(({ hits }) =>
+                     showResults(
+                        results,
+                        hits.length
+                           ? hits.map(renderHit).join("")
+                           : "<p>No results found.</p>",
+                     ),
+                  )
+                  .catch(() =>
+                     showResults(results, "<p>Error fetching results.</p>"),
+                  );
+            }, 300);
+
+            function handleClick(e) {
+               const port = e.target.closest(".port");
+               if (!port) return;
+
+               const block = port.closest(".eminputblock");
+               if (!block) return;
+
+               const inputEl = block.querySelector(".algolio_input");
+               const portIdEl = block.querySelector(".portid");
+               const shortNameEl = block.querySelector(".short_name");
+               const shortCodeEl = block.querySelector(".shortairportcode");
+
+               const name =
+                  port.querySelector(".emfieldname")?.textContent ?? "";
+               const uniqueId =
+                  port.querySelector(".uniqueid")?.textContent ?? "";
+               const shortVal =
+                  port.querySelector(".short-name")?.textContent ??
+                  port.querySelector(".shortname")?.textContent ??
+                  "";
+
+               if (inputEl) {
+                  inputEl.dataset.skipSearch = "true";
+                  inputEl.value = name;
+                  inputEl.dispatchEvent(new Event("input", { bubbles: true }));
+                  inputEl.dispatchEvent(new Event("change", { bubbles: true }));
+               }
+               if (portIdEl) portIdEl.textContent = uniqueId;
+               if (shortNameEl) shortNameEl.textContent = shortVal;
+               if (shortCodeEl) shortCodeEl.textContent = shortVal;
+               hideResults(block);
+            }
+
+            function attachListeners(wrapper) {
+               wrapper.addEventListener("input", handleInput);
+               wrapper.addEventListener("click", handleClick);
+               wrapper.addEventListener("focusout", (e) => {
+                  setTimeout(() => {
+                     if (!e.relatedTarget || !wrapper.contains(e.relatedTarget))
+                        hideResults(wrapper);
+                  }, 100);
+               });
+            }
+
+            const algolioWrappers =
+               document.querySelectorAll(".algolio_wrapper");
+            algolioWrappers.forEach(attachListeners);
+
+            document.addEventListener("click", (e) => {
+               algolioWrappers.forEach((w) => {
+                  if (!w.contains(e.target)) hideResults(w);
+               });
+            });
+
+            function buildLegForm() {
+               const form = document.createElement("form");
+               form.className = "algolio_length";
+               form.setAttribute("autocomplete", "off");
+               form.innerHTML = `
+        <div class="emform generated">
+          <div class="eminputblock">
+            <label>From</label>
+            <div class="eminput_field">
+              <input class="algolio_input multicityform" type="text" />
+              <p class="portid multicityformid"></p>
+              <p class="mcfromairportcode shortairportcode"></p>
+              <p class="short_name multiway_fromshort_name" style="display:none;"></p>
+              <img src="${ICON_GPS}" alt="GPS Icon" />
+            </div>
+            <div class="search-results"></div>
+          </div>
+          <div class="eminputblock">
+            <label>To</label>
+            <div class="eminput_field">
+              <input class="algolio_input multicityto" type="text" />
+              <p class="portid multicitytoid"></p>
+              <p class="mctoairportcode shortairportcode"></p>
+              <p class="short_name multiway_toshort_name" style="display:none;"></p>
+              <img src="${ICON_GPS}" alt="GPS Icon" />
+            </div>
+            <div class="search-results"></div>
+          </div>
+          <div class="eminputblock">
+            <label>Date</label>
+            <div class="eminput_field">
+              <input class="multicitydate" type="date" />
+            </div>
+          </div>
+          <div class="eminputblock">
+            <label>PAX</label>
+            <div class="eminput_field">
+              <div class="empax_wrapper">
+                <div class="empax_minus">-</div>
+                <input class="expaxinput multicitypax" type="text" value="1" readonly />
+                <div class="empax_plus">+</div>
+              </div>
+            </div>
+          </div>
+          <div class="remove">
+            <img src="${ICON_CLOSE}" alt="" />
+          </div>
+        </div>`;
+               return form;
+            }
+
+            let numForms;
+            const addBtn = document.querySelector(
+               "#threeway .emsubmit.add-search-input",
+            );
+            addBtn?.addEventListener("click", function () {
+               const wrapper = document.querySelector(
+                  "#threeway .algolio_wrapper",
+               );
+               numForms = wrapper.querySelectorAll(".algolio_length").length;
+
+               if (numForms > 9) {
+                  this.classList.add("noentry");
+                  this.querySelector("span").textContent =
+                     "You can not add more than 10";
+                  return;
+               }
+
+               const form = buildLegForm();
+               wrapper.appendChild(form);
+               attachListeners(form.closest(".algolio_wrapper"));
+               initPaxBlock(form.querySelector(".empax_wrapper"));
+            });
+
+            // ── REMOVE MULTI-CITY LEG ─────────────────────────────
+            document.addEventListener("click", function (e) {
+               const btn = e.target.closest(".remove");
+               if (!btn) return;
+
+               const form = btn.closest(".algolio_length");
+               if (!form) return;
+
+               form.remove();
+
+               const wrapper = document.querySelector(
+                  "#threeway .algolio_wrapper",
+               );
+               const totalForms =
+                  wrapper.querySelectorAll(".algolio_length").length;
+
+               if (totalForms < 10) {
+                  addBtn?.classList.remove("noentry");
+
+                  const span = addBtn?.querySelector("span");
+                  if (span) span.textContent = "ADD LEG";
+               }
+            });
+
+            new MutationObserver((mutations) => {
+               mutations.forEach(({ addedNodes }) => {
+                  addedNodes.forEach((node) => {
+                     if (node.nodeType !== 1) return;
+                     node
+                        .querySelectorAll(".empax_wrapper")
+                        .forEach(initPaxBlock);
+                     if (node.classList.contains("empax_wrapper"))
+                        initPaxBlock(node);
+                     node
+                        .querySelectorAll(".algolio_wrapper")
+                        .forEach(attachListeners);
+                     if (node.classList.contains("algolio_wrapper"))
+                        attachListeners(node);
+                  });
+               });
+            }).observe(document.body, { childList: true, subtree: true });
+         });
+
+         // ── SWIPER ───────────────────────────────────────────────────────────────────
+         new Swiper(".rent_swipper", {
+            slidesPerView: 4,
+            spaceBetween: 30,
+            navigation: { nextEl: ".rent_right", prevEl: ".rent_left" },
+            breakpoints: {
+               0: { slidesPerView: 1.2, spaceBetween: 10 },
+               577: { slidesPerView: 1.4, spaceBetween: 10 },
+               768: { slidesPerView: 1.5, spaceBetween: 30 },
+               992: { slidesPerView: 3, spaceBetween: 20 },
+               1440: { slidesPerView: 4, spaceBetween: 30 },
+            },
+         });
+
+         // ── FLOATING SIGNUP BUTTON ───────────────────────────────────────────────────
+         document
+            .querySelector(".floating_signup_btn_wrappper a")
+            ?.addEventListener("click", () => {
+               const bar = document.querySelector("#loginForm");
+               if (bar) bar.style.display = "flex";
+            });
+
+         // ── PAGE BAR SUBMIT HANDLERS ─────────────────────────────────────────────────
+         document.addEventListener("DOMContentLoaded", function () {
+            function getUnixTimestamp(dateStr) {
+               return Math.floor(new Date(dateStr + "T00:00:00").getTime());
+            }
+
+            function saveRecentSearch(data) {
+               try {
+                  const list = JSON.parse(
+                     localStorage.getItem("recentSearch") || "[]",
+                  );
+                  list.unshift(data);
+                  localStorage.setItem(
+                     "recentSearch",
+                     JSON.stringify(list.slice(0, 5)),
+                  );
+               } catch (e) {}
+            }
+
+            function clearStorage() {
+               if (localStorage.getItem("aircraft_details"))
+                  localStorage.removeItem("aircraft_details");
+            }
+
+            function getAircraftType(section) {
+               var checked = section.querySelector(".aircraft_radio:checked");
+               return checked ? checked.value : "airplane";
+            }
+
+            // ── ONE WAY ──────────────────────────────────────────────────────────────
+            const owSection = document.querySelector("#oneway");
+            owSection
+               ?.querySelector(".onewaysubmit")
+               ?.addEventListener("click", function () {
+                  const from = owSection
+                     .querySelector("input.onewayform")
+                     ?.value?.trim();
+                  const to = owSection
+                     .querySelector("input.onewayto")
+                     ?.value?.trim();
+                  const fromId = owSection
+                     .querySelector(".onewayformid")
+                     ?.textContent?.trim();
+                  const toId = owSection
+                     .querySelector(".onewaytoid")
+                     ?.textContent?.trim();
+                  const fromSN =
+                     owSection
+                        .querySelector(".onewayfromshort, .shortairportcode")
+                        ?.textContent?.trim() || "";
+                  const toSN =
+                     owSection
+                        .querySelectorAll(".shortairportcode")?.[1]
+                        ?.textContent?.trim() || "";
+                  const date = owSection
+                     .querySelector(".onewaydate")
+                     ?.value?.trim();
+                  const pax = owSection
+                     .querySelector(".onewaypax")
+                     ?.value?.trim();
+
+                  if (!from || !to || !fromId || !toId || !date) {
+                     alert("Please fill up the form properly");
+                     return;
+                  }
+
+                  const data = {
+                     way: "one way",
+                     formIdInput: from,
+                     toIdInput: to,
+                     fromId,
+                     toId,
+                     dateAsText: date,
+                     timeAsText: "00:00:00",
+                     pax,
+                     appDate: date,
+                     timeStamp: getUnixTimestamp(date),
+                     fromShortName: fromSN,
+                     toShortName: toSN,
+                     isFromNearby: "No",
+                     isToNearby: "No",
+                     trip_classification: getAircraftType(owSection),
+                  };
+                  saveRecentSearch(data);
+                  sessionStorage.setItem("storeData", JSON.stringify(data));
+                  clearStorage();
+                  window.location.href = "/aircraft";
+               });
+
+            // ── ROUND TRIP ───────────────────────────────────────────────────────────
+            const rtSection = document.querySelector("#twoway");
+            rtSection
+               ?.querySelector(".roundtrip")
+               ?.addEventListener("click", function () {
+                  const from = rtSection
+                     .querySelector("input.rfrom")
+                     ?.value?.trim();
+                  const to = rtSection
+                     .querySelector("input.rto")
+                     ?.value?.trim();
+                  const fromId = rtSection
+                     .querySelector(".roundfromid")
+                     ?.textContent?.trim();
+                  const toId = rtSection
+                     .querySelector(".roundtoid")
+                     ?.textContent?.trim();
+                  const fromSN =
+                     rtSection
+                        .querySelector(".roundfromshortcode")
+                        ?.textContent?.trim() || "";
+                  const toSN =
+                     rtSection
+                        .querySelector(".roundtoshortcode")
+                        ?.textContent?.trim() || "";
+                  const depDate = rtSection
+                     .querySelector(".rdepdate")
+                     ?.value?.trim();
+                  const retDate = rtSection
+                     .querySelector(".rretdate")
+                     ?.value?.trim();
+                  const pax = rtSection.querySelector(".rpax")?.value?.trim();
+
+                  if (
+                     !from ||
+                     !to ||
+                     !fromId ||
+                     !toId ||
+                     !depDate ||
+                     !retDate
+                  ) {
+                     alert("Please fill up the form properly");
+                     return;
+                  }
+
+                  const data = {
+                     way: "round trip",
+                     formIdInput: from,
+                     toIdInput: to,
+                     fromInputReturn: to,
+                     toInputReturn: from,
+                     fromId,
+                     toId,
+                     returnFromId: toId,
+                     returnToId: fromId,
+                     dateAsText: depDate,
+                     returnDateAsText: retDate,
+                     timeAsText: "00:00:00",
+                     timeAsTextReturn: "00:00:00",
+                     pax,
+                     paxReturn: pax,
+                     appDate: depDate,
+                     appDateReturn: retDate,
+                     timeStamp: getUnixTimestamp(depDate),
+                     timeStampReturn: getUnixTimestamp(retDate),
+                     fromShortName: fromSN,
+                     toShortName: toSN,
+                     isFromNearby: "No",
+                     isToNearby: "No",
+                     trip_classification: getAircraftType(rtSection),
+                  };
+                  saveRecentSearch(data);
+                  sessionStorage.setItem("storeData", JSON.stringify(data));
+                  clearStorage();
+                  window.location.href = "/aircraft";
+               });
+
+            // ── MULTI-CITY ───────────────────────────────────────────────────────────
+            const mcSection = document.querySelector("#threeway");
+            mcSection
+               ?.querySelector(".multicity_submit")
+               ?.addEventListener("click", function () {
+                  const legs = Array.from(
+                     mcSection.querySelectorAll(".algolio_length"),
+                  );
+                  const sFormPort = [],
+                     sToPort = [],
+                     sFormId = [],
+                     sToId = [];
+                  const sDate = [],
+                     sTime = [],
+                     sPax = [],
+                     sFromSN = [],
+                     sToSN = [],
+                     sUnix = [];
+                  let ok = true;
+
+                  legs.forEach((leg) => {
+                     const from = leg
+                        .querySelector(".multicityform")
+                        ?.value?.trim();
+                     const to = leg
+                        .querySelector(".multicityto")
+                        ?.value?.trim();
+                     const fromId = leg
+                        .querySelector(".multicityformid")
+                        ?.textContent?.trim();
+                     const toId = leg
+                        .querySelector(".multicitytoid")
+                        ?.textContent?.trim();
+                     const date = leg
+                        .querySelector(".multicitydate")
+                        ?.value?.trim();
+                     const pax =
+                        leg.querySelector(".multicitypax")?.value?.trim() ||
+                        "1";
+                     const fromSN =
+                        leg
+                           .querySelector(
+                              ".multiway_fromshort_name, .mcfromairportcode",
+                           )
+                           ?.textContent?.trim() || "";
+                     const toSN =
+                        leg
+                           .querySelector(
+                              ".multiway_toshort_name, .mctoairportcode",
+                           )
+                           ?.textContent?.trim() || "";
+
+                     if (!from || !to || !fromId || !toId || !date) {
+                        ok = false;
+                        return;
+                     }
+
+                     sFormPort.push(from);
+                     sToPort.push(to);
+                     sFormId.push(fromId);
+                     sToId.push(toId);
+                     sDate.push(date);
+                     sTime.push("00:00:00");
+                     sPax.push(pax);
+                     sFromSN.push(fromSN);
+                     sToSN.push(toSN);
+                     sUnix.push(getUnixTimestamp(date));
+                  });
+
+                  if (!ok || !legs.length) {
+                     alert("Please fill up the form properly");
+                     return;
+                  }
+
+                  const data = {
+                     way: "multi-city",
+                     formIdInput: sFormPort,
+                     toIdInput: sToPort,
+                     fromId: sFormId,
+                     toId: sToId,
+                     dateAsText: sDate,
+                     timeAsText: sTime,
+                     pax: sPax,
+                     appDate: sDate,
+                     timeStamp: sUnix,
+                     fromShortName: sFromSN,
+                     toShortName: sToSN,
+                     trip_classification: getAircraftType(mcSection),
+                  };
+                  sessionStorage.setItem("storeData", JSON.stringify(data));
+                  clearStorage();
+                  window.location.href = "/aircraft";
+               });
+         });
+
+         // ── SESSION STORAGE REPOPULATION ─────────────────────────────────────────────
+         (function () {
+            let data;
+            try {
+               data = JSON.parse(sessionStorage.getItem("storeData") || "null");
+            } catch {
+               return;
+            }
+            if (!data) return;
+
+            const popup = document.querySelector("#search_bar_pop-up");
+            const isInPopup = (el) => popup?.contains(el) ?? false;
+            const getPageEl = (sel) =>
+               Array.from(document.querySelectorAll(sel)).find(
+                  (el) => !isInPopup(el),
+               );
+
+            function setPageText(sel, value) {
+               const el = getPageEl(sel);
+               if (el && value) el.textContent = value;
+            }
+
+            function setVal(el, value) {
+               if (!el || !value) return;
+               el.dataset.skipSearch = "true";
+               el.value = value;
+               el.dispatchEvent(new Event("input", { bubbles: true }));
+               el.dispatchEvent(new Event("change", { bubbles: true }));
+            }
+
+            function setPax(sel, value) {
+               const pax = getPageEl(sel);
+               if (!pax || !value) return;
+               pax.value = value;
+               const minus = pax
+                  .closest(".empax_wrapper")
+                  ?.querySelector(".empax_minus");
+               minus?.classList.toggle("disabled", parseInt(value) <= 0);
+            }
+
+            function restoreRadio(sectionSel, value) {
+               if (!value) return;
+               const section = document.querySelector(sectionSel);
+               if (!section) return;
+               const radio = section.querySelector(
+                  '.aircraft_radio[value="' + value + '"]',
+               );
+               if (radio) radio.checked = true;
+            }
+
+            function populate() {
+               const { way } = data;
+
+               if (way === "one way") {
+                  setVal(getPageEl("input.onewayform"), data.formIdInput);
+                  setPageText(".onewayformid", data.fromId);
+                  setPageText(".onewayfromshort", data.fromShortName);
+                  setVal(getPageEl("input.onewayto"), data.toIdInput);
+                  setPageText(".onewaytoid", data.toId);
+                  setPageText(".onewaytoshort", data.toShortName);
+                  setVal(getPageEl(".onewaydate"), data.dateAsText);
+                  setPax(".onewaypax", data.pax);
+                  restoreRadio("#oneway", data.trip_classification);
+               } else if (way === "round trip") {
+                  setVal(getPageEl("input.rfrom"), data.formIdInput);
+                  setPageText(".roundfromid", data.fromId);
+                  setPageText(".roundfromshortcode", data.fromShortName);
+                  setVal(getPageEl("input.rto"), data.toIdInput);
+                  setPageText(".roundtoid", data.toId);
+                  setPageText(".roundtoshortcode", data.toShortName);
+                  setVal(getPageEl(".rdepdate"), data.dateAsText);
+                  setVal(getPageEl(".rretdate"), data.returnDateAsText);
+                  setPax(".rpax", data.pax);
+                  restoreRadio("#twoway", data.trip_classification);
+               } else if (way === "multi city" || way === "three way") {
+                  if (!Array.isArray(data.legs)) return;
+
+                  const forms = Array.from(
+                     document.querySelectorAll(".algolio_length"),
+                  ).filter((el) => !isInPopup(el));
+
+                  data.legs.forEach((leg, i) => {
+                     const form = forms[i];
+                     if (!form) return;
+
+                     setVal(
+                        form.querySelector("input.multicityform"),
+                        leg.from,
+                     );
+                     const fromIdEl = form.querySelector(".multicityformid");
+                     const fromShortEl =
+                        form.querySelector(".mcfromairportcode");
+                     if (fromIdEl) fromIdEl.textContent = leg.fromId;
+                     if (fromShortEl) fromShortEl.textContent = leg.fromShort;
+
+                     setVal(form.querySelector("input.multicityto"), leg.to);
+                     const toIdEl = form.querySelector(".multicitytoid");
+                     const toShortEl = form.querySelector(".mctoairportcode");
+                     if (toIdEl) toIdEl.textContent = leg.toId;
+                     if (toShortEl) toShortEl.textContent = leg.toShort;
+
+                     setVal(form.querySelector(".multicitydate"), leg.date);
+
+                     const pax = form.querySelector(".multicitypax");
+                     const minus = pax
+                        ?.closest(".empax_wrapper")
+                        ?.querySelector(".empax_minus");
+                     if (pax && leg.pax) {
+                        pax.value = leg.pax;
+                        minus?.classList.toggle(
+                           "disabled",
+                           parseInt(leg.pax) <= 0,
+                        );
+                     }
+                  });
+                  restoreRadio("#threeway", data.trip_classification);
+               }
+            }
+
+            // Wait for Webflow to finish rendering before populating
+            document.addEventListener("DOMContentLoaded", function () {
+               setTimeout(populate, 1500);
+            });
+         })();
+      </script>
+   </body>
+</html>

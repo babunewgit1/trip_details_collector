@@ -717,9 +717,9 @@ function renderPage(page, filteredSets) {
 
    const fragment = document.createDocumentFragment();
 
-   // Only render hot deals if user is logged in (security measure)
+   // Only render hot deals if user is logged in and trip is airplane classification
    const isLoggedIn = isUserLoggedIn();
-   if (hotDeals && page === 1 && isLoggedIn) {
+   if (hotDeals && page === 1 && isLoggedIn && tripClassification === "airplane") {
       hotDeals.forEach((item) => {
          createItemBlock(item, globalIndex, true, fragment, distance, TimeDown);
          globalIndex++;

@@ -897,6 +897,17 @@ function formatDate(dateString) {
    return date.toLocaleDateString("en-GB", options);
 }
 
+// Restore radio button selection from session storage
+function restoreRadio(sectionSel, value) {
+   if (!value) return;
+   const section = document.querySelector(sectionSel);
+   if (!section) return;
+   const radio = section.querySelector(
+      '.aircraft_radio[value="' + value + '"]',
+   );
+   if (radio) radio.checked = true;
+}
+
 // for one way
 const owFromAirpName = document.querySelector(".owfaname");
 const owFromAirpId = document.querySelector(".owfaid");
@@ -951,6 +962,9 @@ function fillInputOneWay() {
          JSON.stringify(getstoredDataSM.paxBreakdown),
       );
    }
+
+   // Restore aircraft type radio button
+   restoreRadio("#mstaboneway", getstoredDataSM.trip_classification);
 }
 
 // for round trip
@@ -1014,6 +1028,9 @@ function fillInputRound() {
          JSON.stringify(getstoredDataSM.paxBreakdown),
       );
    }
+
+   // Restore aircraft type radio button
+   restoreRadio("#mstabroundtrip", getstoredDataSM.trip_classification);
 }
 
 // for multicity
@@ -1133,6 +1150,9 @@ if (getstoredDataSM.way === "multi-city") {
 const multicityPreDefine = document.querySelector(".multicity_predefine");
 if (getstoredDataSM.way === "multi-city") {
    multicityPreDefine.style.display = "none";
+
+   // Restore aircraft type radio button for multi-city
+   restoreRadio("#mstabmulticity", getstoredDataSM.trip_classification);
 } else {
    multicityPreDefine.style.display = "block";
 }
@@ -1954,6 +1974,12 @@ function showErrorToast(message) {
    }
 }
 
+// Helper function to get selected aircraft type from radio buttons
+function getAircraftType(section) {
+   var checked = section.querySelector(".aircraft_radio:checked");
+   return checked ? checked.value : "airplane";
+}
+
 // One Way Submission
 document
    .querySelector(".oneway_search_btn")
@@ -2013,6 +2039,9 @@ document
          toShortName,
          isFromNearby,
          isToNearby,
+         trip_classification: getAircraftType(
+            document.querySelector("#mstaboneway"),
+         ),
          paxBreakdown: paxBreakdown
             ? JSON.parse(paxBreakdown)
             : pax
@@ -2121,6 +2150,9 @@ document
          toShortName,
          isFromNearby,
          isToNearby,
+         trip_classification: getAircraftType(
+            document.querySelector("#mstabroundtrip"),
+         ),
          paxBreakdown: paxBreakdown
             ? JSON.parse(paxBreakdown)
             : pax
@@ -2236,6 +2268,9 @@ document
             fromShortName: storeFromShortName,
             toShortName: storeToShortName,
             paxBreakdown: storePaxBreakdown,
+            trip_classification: getAircraftType(
+               document.querySelector("#mstabmulticity"),
+            ),
          };
 
          sessionStorage.setItem("storeData", JSON.stringify(storeData));

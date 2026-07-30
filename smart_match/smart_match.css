@@ -1,0 +1,180 @@
+.smt_popup {
+   position: fixed;
+   width: 100%;
+   height: 100vh;
+   background-color: rgba(0, 0, 0, 0.6);
+   left: 0;
+   top: 0;
+   backdrop-filter: blur(5px);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 999;
+   opacity: 1;
+   transition:
+      opacity 0.4s ease,
+      transform 0.4s ease;
+}
+
+.smt_match_request,
+.stepOne {
+   max-width: 1000px;
+   background-color: #fff;
+   border-radius: 10px;
+}
+
+.smt_mr_heading {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   background-color: #f3f3f3;
+   padding: 16px 20px;
+   border-radius: 10px 10px 0px 0px;
+}
+
+.smt_mr_heading h4 {
+   font-size: 20px;
+   letter-spacing: 0.5px;
+   color: #03141b;
+   text-transform: uppercase;
+}
+
+.smt_mr_heading button {
+   display: inline-block;
+   background-color: transparent;
+   padding: 0;
+   border: 0;
+   outline: o;
+   cursor: pointer;
+   transition: all 0.2s ease;
+}
+
+.smt_mr_heading button img {
+   display: inline-block;
+   width: 16px;
+}
+
+.smt_mr_heading button:hover {
+   opacity: 0.7;
+}
+
+.smt_mr_cnt {
+   padding: 60px 90px;
+}
+
+.smt_mr_cnt_icon {
+   margin-bottom: 36px;
+}
+
+.smt_mr_cnt_icon img {
+   display: block;
+   width: 160px;
+   margin: auto;
+}
+
+.smt_mr_text {
+   text-align: center;
+}
+
+.smt_mr_text p {
+   font-size: 20px;
+   color: #1e1e1e;
+   margin-top: 24px;
+   line-height: 26px;
+}
+
+.prc_to_match,
+.ap_continue_btn {
+   margin-top: 30px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+/* Radio Button Grid */
+.apso_class_radio_wrapper {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 16px;
+}
+
+.apso_radio_item {
+   cursor: pointer;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.apso_radio_item input[type="radio"] {
+   display: none;
+}
+
+.apso_radio_img {
+   width: 100%;
+   border-radius: 10px;
+   overflow: hidden;
+   margin-bottom: 10px;
+}
+
+.apso_radio_img img {
+   display: block;
+   width: 100%;
+   height: auto;
+   aspect-ratio: 4 / 3;
+   object-fit: cover;
+   transition: transform 0.3s ease;
+}
+
+.apso_radio_item:hover .apso_radio_img img {
+   transform: scale(1.05);
+}
+
+.apso_radio_label {
+   display: flex;
+   align-items: center;
+   gap: 6px;
+}
+
+.apso_custom_radio {
+   width: 16px;
+   height: 16px;
+   min-width: 16px;
+   border-radius: 50%;
+   border: 2px solid #ccc;
+   display: inline-block;
+   position: relative;
+   transition: border-color 0.2s ease;
+}
+
+.apso_custom_radio::after {
+   content: "";
+   width: 8px;
+   height: 8px;
+   border-radius: 50%;
+   background-color: #d94f3f;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%) scale(0);
+   transition: transform 0.2s ease;
+}
+
+.apso_radio_item input[type="radio"]:checked ~ .apso_custom_radio {
+   border-color: #d94f3f;
+}
+
+.apso_radio_item input[type="radio"]:checked ~ .apso_custom_radio::after {
+   transform: translate(-50%, -50%) scale(1);
+}
+
+.apso_radio_text {
+   font-size: 12px;
+   font-weight: 700;
+   letter-spacing: 0.5px;
+   color: #333;
+   text-transform: uppercase;
+}
+
+.apso_radio_item input[type="radio"]:checked ~ .apso_radio_text {
+   color: #d94f3f;
+}
