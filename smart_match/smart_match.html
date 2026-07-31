@@ -124,7 +124,7 @@
             <!-- How smart match works popup end-->
 
             <!-- Step One popup Start-->
-            <div class="stepOne">
+            <div style="display: none" id="stepOne" class="stepOne">
                <div class="smt_mr_heading">
                   <h4>Smart Match Request</h4>
                   <button class="apPopClose" type="button">
@@ -134,154 +134,1143 @@
                      />
                   </button>
                </div>
-               <div class="apso_step">
-                  <div class="apso_step_item apcurrent_item">
-                     <div class="apso_step_item_text">
-                        <p>01</p>
+               <div class="stepOne_wrapper">
+                  <div class="apso_step">
+                     <div class="apso_step_item apcurrent_item">
+                        <div class="apso_step_item_text">
+                           <p>01</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
                      </div>
-                     <div class="apso_step_bar"></div>
-                  </div>
-                  <div class="apso_step_item">
-                     <div class="apso_step_item_text">
-                        <p>02</p>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>02</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
                      </div>
-                     <div class="apso_step_bar"></div>
-                  </div>
-                  <div class="apso_step_item">
-                     <div class="apso_step_item_text">
-                        <p>03</p>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>03</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
                      </div>
-                     <div class="apso_step_bar"></div>
-                  </div>
-                  <div class="apso_step_item">
-                     <div class="apso_step_item_text">
-                        <p>04</p>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>04</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
                      </div>
-                     <div class="apso_step_bar"></div>
-                  </div>
-                  <div class="apso_step_item">
-                     <div class="apso_step_item_text">
-                        <p>05</p>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>05</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
                      </div>
-                     <div class="apso_step_bar"></div>
-                  </div>
-                  <div class="apso_step_item">
-                     <div class="apso_step_item_text">
-                        <p>06</p>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>06</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
                      </div>
-                     <div class="apso_step_bar"></div>
                   </div>
-               </div>
-               <div class="apso_banner">
-                  <img
-                     src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6b36fc3e6cf53cab696e05_st2_banner.png"
-                     alt="bannar image"
-                  />
-                  <div class="apso_banner_text">
-                     <h4>
-                        We'll prioritize these categories when sourcing your
-                        trip,
-                     </h4>
-                     <p>
-                        while also including comparable aircraft if they offer
-                        better availability, value, or amenities.
-                     </p>
+                  <div class="apso_banner">
+                     <img
+                        src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6b36fc3e6cf53cab696e05_st2_banner.png"
+                        alt="bannar image"
+                     />
+                     <div class="apso_banner_text">
+                        <h4>
+                           We'll prioritize these categories when sourcing your
+                           trip,
+                        </h4>
+                        <p>
+                           while also including comparable aircraft if they
+                           offer better availability, value, or amenities.
+                        </p>
+                     </div>
                   </div>
-               </div>
-               <div class="apso_class">
-                  <div class="apso_class_heading">
-                     <div class="apsoh_bar"></div>
-                     <h3>Preferred Aircraft CLASSES</h3>
-                     <div class="apsoh_bar"></div>
+                  <div class="apso_class">
+                     <div class="apso_class_heading">
+                        <div class="apsoh_bar"></div>
+                        <h3>Preferred Aircraft CLASSES</h3>
+                        <div class="apsoh_bar"></div>
+                     </div>
+                     <div class="apso_class_radio_wrapper">
+                        <label class="apso_radio_item">
+                           <div class="apso_radio_img">
+                              <img
+                                 src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c41ba327b304792f96709_radio1.avif"
+                                 alt="Turboprop"
+                              />
+                           </div>
+                           <div class="apso_radio_label">
+                              <input
+                                 type="radio"
+                                 name="aircraft_class"
+                                 value="Turboprop"
+                              />
+                              <span class="apso_custom_radio"></span>
+                              <span class="apso_radio_text">TURBOPROP</span>
+                           </div>
+                        </label>
+                        <label class="apso_radio_item">
+                           <div class="apso_radio_img">
+                              <img
+                                 src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c41babd5ce09a96ab124b_radio2.avif"
+                                 alt="Very Light Jet"
+                              />
+                           </div>
+                           <div class="apso_radio_label">
+                              <input
+                                 type="radio"
+                                 name="aircraft_class"
+                                 value="Very Light Jet"
+                              />
+                              <span class="apso_custom_radio"></span>
+                              <span class="apso_radio_text"
+                                 >VERY LIGHT JET</span
+                              >
+                           </div>
+                        </label>
+                        <label class="apso_radio_item">
+                           <div class="apso_radio_img">
+                              <img
+                                 src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c41bac95798982ca28ae6_radio3.avif"
+                                 alt="Light Jet"
+                              />
+                           </div>
+                           <div class="apso_radio_label">
+                              <input
+                                 type="radio"
+                                 name="aircraft_class"
+                                 value="Light Jet"
+                              />
+                              <span class="apso_custom_radio"></span>
+                              <span class="apso_radio_text">LIGHT JET</span>
+                           </div>
+                        </label>
+                        <label class="apso_radio_item">
+                           <div class="apso_radio_img">
+                              <img
+                                 src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c41ba3316986c434e4a69_radio4.webp"
+                                 alt="Midsize Jet"
+                              />
+                           </div>
+                           <div class="apso_radio_label">
+                              <input
+                                 type="radio"
+                                 name="aircraft_class"
+                                 value="Midsize Jet"
+                              />
+                              <span class="apso_custom_radio"></span>
+                              <span class="apso_radio_text">MIDSIZE JET</span>
+                           </div>
+                        </label>
+                        <label class="apso_radio_item">
+                           <div class="apso_radio_img">
+                              <img
+                                 src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c4222e390b944cabeee81_radio5.webp"
+                                 alt="Super Midsize Jet"
+                              />
+                           </div>
+                           <div class="apso_radio_label">
+                              <input
+                                 type="radio"
+                                 name="aircraft_class"
+                                 value="Super Midsize Jet"
+                              />
+                              <span class="apso_custom_radio"></span>
+                              <span class="apso_radio_text"
+                                 >SUPER MIDSIZE JET</span
+                              >
+                           </div>
+                        </label>
+                        <label class="apso_radio_item">
+                           <div class="apso_radio_img">
+                              <img
+                                 src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c41bcd905f50a9a2cefba_radio6.webp"
+                                 alt="Heavy Jet"
+                              />
+                           </div>
+                           <div class="apso_radio_label">
+                              <input
+                                 type="radio"
+                                 name="aircraft_class"
+                                 value="Heavy Jet"
+                              />
+                              <span class="apso_custom_radio"></span>
+                              <span class="apso_radio_text">HEAVY JET</span>
+                           </div>
+                        </label>
+                        <label class="apso_radio_item">
+                           <div class="apso_radio_img">
+                              <img
+                                 src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c41bbe390b944cabec910_radio7.webp"
+                                 alt="Ultra Long Range"
+                              />
+                           </div>
+                           <div class="apso_radio_label">
+                              <input
+                                 type="radio"
+                                 name="aircraft_class"
+                                 value="Ultra Long Range"
+                              />
+                              <span class="apso_custom_radio"></span>
+                              <span class="apso_radio_text"
+                                 >ULTRA LONG RANGE</span
+                              >
+                           </div>
+                        </label>
+                        <label class="apso_radio_item">
+                           <div class="apso_radio_img">
+                              <img
+                                 src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c41bbfb143418aa88e83e_radio8.avif"
+                                 alt="VIP Airliner"
+                              />
+                           </div>
+                           <div class="apso_radio_label">
+                              <input
+                                 type="radio"
+                                 name="aircraft_class"
+                                 value="VIP Airliner"
+                              />
+                              <span class="apso_custom_radio"></span>
+                              <span class="apso_radio_text">VIP AIRLINER</span>
+                           </div>
+                        </label>
+                     </div>
                   </div>
-                  <div class="apso_class_radio_wrapper">
-                     <label class="apso_radio_item">
-                        <div class="apso_radio_img">
-                           <img src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6b4e4c72e5217e78e22e22_turboprop.png" alt="Turboprop" />
-                        </div>
-                        <div class="apso_radio_label">
-                           <input type="radio" name="aircraft_class" value="Turboprop" />
-                           <span class="apso_custom_radio"></span>
-                           <span class="apso_radio_text">TURBOPROP</span>
-                        </div>
-                     </label>
-                     <label class="apso_radio_item">
-                        <div class="apso_radio_img">
-                           <img src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6b4e4d72e5217e78e22e5b_very_light_jet.png" alt="Very Light Jet" />
-                        </div>
-                        <div class="apso_radio_label">
-                           <input type="radio" name="aircraft_class" value="Very Light Jet" />
-                           <span class="apso_custom_radio"></span>
-                           <span class="apso_radio_text">VERY LIGHT JET</span>
-                        </div>
-                     </label>
-                     <label class="apso_radio_item">
-                        <div class="apso_radio_img">
-                           <img src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6b4e4c72e5217e78e22e2e_light_jet.png" alt="Light Jet" />
-                        </div>
-                        <div class="apso_radio_label">
-                           <input type="radio" name="aircraft_class" value="Light Jet" />
-                           <span class="apso_custom_radio"></span>
-                           <span class="apso_radio_text">LIGHT JET</span>
-                        </div>
-                     </label>
-                     <label class="apso_radio_item">
-                        <div class="apso_radio_img">
-                           <img src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6b4e4c72e5217e78e22e35_midsize_jet.png" alt="Midsize Jet" />
-                        </div>
-                        <div class="apso_radio_label">
-                           <input type="radio" name="aircraft_class" value="Midsize Jet" />
-                           <span class="apso_custom_radio"></span>
-                           <span class="apso_radio_text">MIDSIZE JET</span>
-                        </div>
-                     </label>
-                     <label class="apso_radio_item">
-                        <div class="apso_radio_img">
-                           <img src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6b4e4d72e5217e78e22e49_super_midsize_jet.png" alt="Super Midsize Jet" />
-                        </div>
-                        <div class="apso_radio_label">
-                           <input type="radio" name="aircraft_class" value="Super Midsize Jet" />
-                           <span class="apso_custom_radio"></span>
-                           <span class="apso_radio_text">SUPER MIDSIZE JET</span>
-                        </div>
-                     </label>
-                     <label class="apso_radio_item">
-                        <div class="apso_radio_img">
-                           <img src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6b4e4c72e5217e78e22e26_heavy_jet.png" alt="Heavy Jet" />
-                        </div>
-                        <div class="apso_radio_label">
-                           <input type="radio" name="aircraft_class" value="Heavy Jet" />
-                           <span class="apso_custom_radio"></span>
-                           <span class="apso_radio_text">HEAVY JET</span>
-                        </div>
-                     </label>
-                     <label class="apso_radio_item">
-                        <div class="apso_radio_img">
-                           <img src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6b4e4d72e5217e78e22e54_ultra_long_range.png" alt="Ultra Long Range" />
-                        </div>
-                        <div class="apso_radio_label">
-                           <input type="radio" name="aircraft_class" value="Ultra Long Range" />
-                           <span class="apso_custom_radio"></span>
-                           <span class="apso_radio_text">ULTRA LONG RANGE</span>
-                        </div>
-                     </label>
-                     <label class="apso_radio_item">
-                        <div class="apso_radio_img">
-                           <img src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6b4e4d72e5217e78e22e5e_vip_airliner.png" alt="VIP Airliner" />
-                        </div>
-                        <div class="apso_radio_label">
-                           <input type="radio" name="aircraft_class" value="VIP Airliner" />
-                           <span class="apso_custom_radio"></span>
-                           <span class="apso_radio_text">VIP AIRLINER</span>
-                        </div>
-                     </label>
+                  <div class="ap_pagiantion">
+                     <button id="ap_prev">
+                        <img
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447cc811ea83171733ca_left_arrow.png"
+                           alt="prev icon"
+                        />
+                        Prev
+                     </button>
+                     <button id="ap_prev">
+                        <img
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447c7ac035cdb7c13bea_ap_next.png"
+                           alt="next icon"
+                        />
+                        Prev
+                     </button>
                   </div>
-               </div>
-               <div class="ap_continue_btn">
-                  <button class="button fill_button" type="button">CONTINUE</button>
                </div>
             </div>
             <!-- Step One popup End-->
+
+            <!-- Step Two popup Start-->
+            <div style="display: none" id="stepTwo" class="stepOne">
+               <div class="smt_mr_heading">
+                  <h4>Smart Match Request</h4>
+                  <button class="apPopClose" type="button">
+                     <img
+                        src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6929904e2a85631be7392ee2_ms_cross.webp"
+                        alt="cross_icon"
+                     />
+                  </button>
+               </div>
+               <div class="stepOne_wrapper">
+                  <div class="apso_step">
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>01</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcurrent_item">
+                        <div class="apso_step_item_text">
+                           <p>02</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>03</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>04</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>05</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>06</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                  </div>
+                  <div class="apso_banner">
+                     <img
+                        src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c66b8d905f50a9a43a806_step2_banner.avif"
+                        alt="bannar image"
+                     />
+                     <div class="apso_banner_text">
+                        <h4>
+                           Your budget is used as a guideline, not a strict
+                           limit.
+                        </h4>
+                        <p>
+                           If we identify exceptional aircraft or better-value
+                           options slightly outside your selected range, we'll
+                           include them for your consideration.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="apso_class">
+                     <div class="apso_class_heading">
+                        <div class="apsoh_bar"></div>
+                        <h3>Target Budget</h3>
+                        <div class="apsoh_bar"></div>
+                     </div>
+                     <div class="step2rdobox_wrapper">
+                        <label class="step2_radio_item">
+                           <input
+                              type="radio"
+                              name="target_budget"
+                              value="Lowest Available Price"
+                           />
+                           <span class="apso_custom_radio"></span>
+                           <span class="step2_radio_text"
+                              >Lowest Available Price</span
+                           >
+                        </label>
+                        <label class="step2_radio_item">
+                           <input
+                              type="radio"
+                              name="target_budget"
+                              value="Under $10,000"
+                           />
+                           <span class="apso_custom_radio"></span>
+                           <span class="step2_radio_text">Under $10,000</span>
+                        </label>
+                        <label class="step2_radio_item">
+                           <input
+                              type="radio"
+                              name="target_budget"
+                              value="Under $20,000"
+                           />
+                           <span class="apso_custom_radio"></span>
+                           <span class="step2_radio_text">Under $20,000</span>
+                        </label>
+                        <label class="step2_radio_item">
+                           <input
+                              type="radio"
+                              name="target_budget"
+                              value="Under $30,000"
+                           />
+                           <span class="apso_custom_radio"></span>
+                           <span class="step2_radio_text">Under $30,000</span>
+                        </label>
+                        <label class="step2_radio_item">
+                           <input
+                              type="radio"
+                              name="target_budget"
+                              value="Under $50,000"
+                           />
+                           <span class="apso_custom_radio"></span>
+                           <span class="step2_radio_text">Under $50,000</span>
+                        </label>
+                        <label class="step2_radio_item">
+                           <input
+                              type="radio"
+                              name="target_budget"
+                              value="Under $75,000"
+                           />
+                           <span class="apso_custom_radio"></span>
+                           <span class="step2_radio_text">Under $75,000</span>
+                        </label>
+                        <label class="step2_radio_item">
+                           <input
+                              type="radio"
+                              name="target_budget"
+                              value="Under $100,000"
+                           />
+                           <span class="apso_custom_radio"></span>
+                           <span class="step2_radio_text">Under $100,000</span>
+                        </label>
+                        <label class="step2_radio_item">
+                           <input
+                              type="radio"
+                              name="target_budget"
+                              value="Flexible Budget"
+                           />
+                           <span class="apso_custom_radio"></span>
+                           <span class="step2_radio_text">Flexible Budget</span>
+                        </label>
+                     </div>
+                  </div>
+                  <div class="ap_pagiantion">
+                     <button id="ap_prev">
+                        <img
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447cc811ea83171733ca_left_arrow.png"
+                           alt="prev icon"
+                        />
+                        Prev
+                     </button>
+                     <button id="ap_prev">
+                        Next
+                        <img
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447c7ac035cdb7c13bea_ap_next.png"
+                           alt="next icon"
+                        />
+                     </button>
+                  </div>
+               </div>
+            </div>
+            <!-- Step Two popup End-->
+
+            <!-- Step Three popup Start-->
+            <div style="display: none" id="stepThree" class="stepOne">
+               <div class="smt_mr_heading">
+                  <h4>Smart Match Request</h4>
+                  <button class="apPopClose" type="button">
+                     <img
+                        src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6929904e2a85631be7392ee2_ms_cross.webp"
+                        alt="cross_icon"
+                     />
+                  </button>
+               </div>
+               <div class="stepOne_wrapper">
+                  <div class="apso_step">
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>01</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>02</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcurrent_item">
+                        <div class="apso_step_item_text">
+                           <p>03</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>04</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>05</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>06</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                  </div>
+                  <div class="apso_banner">
+                     <img
+                        src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c733544b5a1d98f2318cc_ban3.png"
+                        alt="bannar image"
+                     />
+                     <div class="apso_banner_text">
+                        <h4>
+                           We'll use these preferences to personalize your
+                           aircraft recommendations.
+                        </h4>
+                        <p>
+                           Some requested features may not be available on every
+                           aircraft or itinerary.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="apso_class">
+                     <div class="apso_class_heading">
+                        <div class="apsoh_bar"></div>
+                        <h3>What’s Most Important?</h3>
+                        <div class="apsoh_bar"></div>
+                     </div>
+                     <div class="step3checkboxwrapper">
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="preferences"
+                              value="Lowest Price"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text">Lowest Price</span>
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="preferences"
+                              value="Newer Aircraft"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text"
+                              >Newer Aircraft</span
+                           >
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="preferences"
+                              value="Wi-Fi Required"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text"
+                              >Wi-Fi Required</span
+                           >
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="preferences"
+                              value="Flight Attendant"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text"
+                              >Flight Attendant</span
+                           >
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="preferences"
+                              value="Pet Friendly"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text">Pet Friendly</span>
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="preferences"
+                              value="Enclosed Lavatory"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text"
+                              >Enclosed Lavatory</span
+                           >
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="preferences"
+                              value="Sleeps Overnight"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text"
+                              >Sleeps Overnight</span
+                           >
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="preferences"
+                              value="Large Baggage Capacity"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text"
+                              >Large Baggage Capacity</span
+                           >
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="preferences"
+                              value="Quiet Cabin"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text">Quiet Cabin</span>
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="preferences"
+                              value="Fastest Aircraft Available"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text"
+                              >Fastest Aircraft Available</span
+                           >
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="preferences"
+                              value="Preferred Aircraft Manufacturer"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text"
+                              >Preferred Aircraft Manufacturer</span
+                           >
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="preferences"
+                              value="Specific Aircraft Model"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text"
+                              >Specific Aircraft Model</span
+                           >
+                        </label>
+                     </div>
+                  </div>
+                  <div class="ap_pagiantion">
+                     <button id="ap_prev">
+                        <img
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447cc811ea83171733ca_left_arrow.png"
+                           alt="prev icon"
+                        />
+                        Prev
+                     </button>
+                     <button id="ap_prev">
+                        Next
+                        <img
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447c7ac035cdb7c13bea_ap_next.png"
+                           alt="next icon"
+                        />
+                     </button>
+                  </div>
+               </div>
+            </div>
+            <!-- Step Three popup End-->
+
+            <!-- Step Four popup Start-->
+            <div style="display: none" id="stepFour" class="stepOne">
+               <div class="smt_mr_heading">
+                  <h4>Smart Match Request</h4>
+                  <button class="apPopClose" type="button">
+                     <img
+                        src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6929904e2a85631be7392ee2_ms_cross.webp"
+                        alt="cross_icon"
+                     />
+                  </button>
+               </div>
+               <div class="stepOne_wrapper">
+                  <div class="apso_step">
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>01</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>02</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>03</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcurrent_item">
+                        <div class="apso_step_item_text">
+                           <p>04</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>05</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>06</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                  </div>
+                  <div class="apso_banner">
+                     <img
+                        src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c76ea1097432a87afd1cc_ban4.avif"
+                        alt="bannar image"
+                     />
+                  </div>
+                  <div class="apso_class">
+                     <div class="apso_class_heading">
+                        <div class="apsoh_bar"></div>
+                        <h3>Charter Flights/Year</h3>
+                        <div class="apsoh_bar"></div>
+                     </div>
+                     <div class="step4_radio_wrapper">
+                        <label class="step2_radio_item">
+                           <input
+                              type="radio"
+                              name="charter_flights_year"
+                              value="First Time"
+                           />
+                           <span class="apso_custom_radio"></span>
+                           <span class="step2_radio_text">First Time</span>
+                        </label>
+                        <label class="step2_radio_item">
+                           <input
+                              type="radio"
+                              name="charter_flights_year"
+                              value="1-3 times/yr"
+                           />
+                           <span class="apso_custom_radio"></span>
+                           <span class="step2_radio_text">1–3 times/yr</span>
+                        </label>
+                        <label class="step2_radio_item">
+                           <input
+                              type="radio"
+                              name="charter_flights_year"
+                              value="4-10 times/yr"
+                           />
+                           <span class="apso_custom_radio"></span>
+                           <span class="step2_radio_text">4-10 times/yr</span>
+                        </label>
+                        <label class="step2_radio_item">
+                           <input
+                              type="radio"
+                              name="charter_flights_year"
+                              value="10+ times/yr"
+                           />
+                           <span class="apso_custom_radio"></span>
+                           <span class="step2_radio_text">10+ times/yr</span>
+                        </label>
+                     </div>
+                  </div>
+                  <div class="apso_class">
+                     <div class="apso_class_heading">
+                        <div class="apsoh_bar"></div>
+                        <h3>Interest In</h3>
+                        <div class="apsoh_bar"></div>
+                     </div>
+                     <div class="step4_checkbox_wrapper">
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="interest_in"
+                              value="Charter"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text">Charter</span>
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="interest_in"
+                              value="Empty Legs"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text">Empty Legs</span>
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="interest_in"
+                              value="Fractional Ownership"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text"
+                              >Fractional Ownership</span
+                           >
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="interest_in"
+                              value="Jet Card"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text">Jet Card</span>
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="interest_in"
+                              value="Whole Ownership"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text"
+                              >Whole Ownership</span
+                           >
+                        </label>
+                     </div>
+                  </div>
+                  <div class="apso_class">
+                     <div class="apso_class_heading">
+                        <div class="apsoh_bar"></div>
+                        <h3>Cabin Preference</h3>
+                        <div class="apsoh_bar"></div>
+                     </div>
+                     <div class="step4_checkbox_wrapper">
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="cabin_preference"
+                              value="Light"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text">Light</span>
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="cabin_preference"
+                              value="Mid Size"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text">Mid Size</span>
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="cabin_preference"
+                              value="Super Mid Size"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text"
+                              >Super Mid Size</span
+                           >
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="cabin_preference"
+                              value="Heavy"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text">Heavy</span>
+                        </label>
+                        <label class="step3_checkbox_item">
+                           <input
+                              type="checkbox"
+                              name="cabin_preference"
+                              value="Turboprop"
+                           />
+                           <span class="step3_custom_checkbox"></span>
+                           <span class="step3_checkbox_text">Turboprop</span>
+                        </label>
+                     </div>
+                  </div>
+                  <div class="ap_pagiantion">
+                     <button id="ap_prev">
+                        <img
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447cc811ea83171733ca_left_arrow.png"
+                           alt="prev icon"
+                        />
+                        Prev
+                     </button>
+                     <button id="ap_prev">
+                        Next
+                        <img
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447c7ac035cdb7c13bea_ap_next.png"
+                           alt="next icon"
+                        />
+                     </button>
+                  </div>
+               </div>
+            </div>
+            <!-- Step Four popup End-->
+
+            <!-- Step Five popup Start-->
+            <div style="display: none" id="stepFive" class="stepOne">
+               <div class="smt_mr_heading">
+                  <h4>Smart Match Request</h4>
+                  <button class="apPopClose" type="button">
+                     <img
+                        src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6929904e2a85631be7392ee2_ms_cross.webp"
+                        alt="cross_icon"
+                     />
+                  </button>
+               </div>
+               <div class="stepOne_wrapper">
+                  <div class="apso_step">
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>01</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>02</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>03</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>04</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcurrent_item">
+                        <div class="apso_step_item_text">
+                           <p>05</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item">
+                        <div class="apso_step_item_text">
+                           <p>06</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                  </div>
+                  <div class="apso_banner">
+                     <img
+                        src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c7accc811ea831739c4de_ban5.avif"
+                        alt="bannar image"
+                     />
+                  </div>
+                  <div class="apso_class">
+                     <div class="apso_class_heading">
+                        <div class="apsoh_bar"></div>
+                        <h3>CONFIRM DATES AND DEPARTURE TIMES</h3>
+                        <div class="apsoh_bar"></div>
+                     </div>
+                     <div class="stepFiveDateWrapper"></div>
+                  </div>
+                  <div class="ap_pagiantion">
+                     <button id="ap_prev">
+                        <img
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447cc811ea83171733ca_left_arrow.png"
+                           alt="prev icon"
+                        />
+                        Prev
+                     </button>
+                     <button id="ap_prev">
+                        Next
+                        <img
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447c7ac035cdb7c13bea_ap_next.png"
+                           alt="next icon"
+                        />
+                     </button>
+                  </div>
+               </div>
+            </div>
+            <!-- Step Five popup End-->
+
+            <!-- Step Six popup Start-->
+            <div id="stepSix" class="stepOne">
+               <div class="smt_mr_heading">
+                  <h4>Smart Match Request</h4>
+                  <button class="apPopClose" type="button">
+                     <img
+                        src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6929904e2a85631be7392ee2_ms_cross.webp"
+                        alt="cross_icon"
+                     />
+                  </button>
+               </div>
+               <div class="stepOne_wrapper">
+                  <div class="apso_step">
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>01</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>02</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>03</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>04</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>05</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcurrent_item">
+                        <div class="apso_step_item_text">
+                           <p>06</p>
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                  </div>
+                  <div class="step6cnt">
+                     <p>
+                        Tell us anything else that would help us find the
+                        perfect aircraft.
+                     </p>
+                     <textarea placeholder="Write your message"></textarea>
+                     <div class="step6cnt_selectable">
+                        <label class="step6_chip">
+                           <input
+                              type="checkbox"
+                              name="quick_notes"
+                              value="Challenger 350 preferred"
+                           />
+                           <span class="step6_chip_text"
+                              >Challenger 350 preferred</span
+                           >
+                        </label>
+                        <label class="step6_chip">
+                           <input
+                              type="checkbox"
+                              name="quick_notes"
+                              value="Need Wi-Fi for meetings"
+                           />
+                           <span class="step6_chip_text"
+                              >Need Wi-Fi for meetings</span
+                           >
+                        </label>
+                        <label class="step6_chip">
+                           <input
+                              type="checkbox"
+                              name="quick_notes"
+                              value="Bringing golf clubs"
+                           />
+                           <span class="step6_chip_text"
+                              >Bringing golf clubs</span
+                           >
+                        </label>
+                        <label class="step6_chip">
+                           <input
+                              type="checkbox"
+                              name="quick_notes"
+                              value="Flexible departure time"
+                           />
+                           <span class="step6_chip_text"
+                              >Flexible departure time</span
+                           >
+                        </label>
+                        <label class="step6_chip">
+                           <input
+                              type="checkbox"
+                              name="quick_notes"
+                              value="Looking for the newest aircraft available"
+                           />
+                           <span class="step6_chip_text"
+                              >Looking for the newest aircraft available</span
+                           >
+                        </label>
+                     </div>
+                     <div class="submit_task">
+                        <button
+                           id="submit_task"
+                           class="button fill_button"
+                           type="button"
+                        >
+                           Start My Smart Match
+                        </button>
+                     </div>
+                     <div class="step6_feature">
+                        <div class="step6_block_para">
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c8d21e276e996d7d504fe_check.png"
+                              alt="check_icon"
+                           />
+                           <p>No obligation.</p>
+                        </div>
+                        <div class="step6_block_para">
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c8d21e276e996d7d504fe_check.png"
+                              alt="check_icon"
+                           />
+                           <p>
+                              Your personalized recommendations will typically
+                              arrive within <b>60 minutes</b> during business
+                              hours.
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- Step Six popup End-->
          </div>
       </div>
    </body>
