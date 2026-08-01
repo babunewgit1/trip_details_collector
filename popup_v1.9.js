@@ -3057,3 +3057,636 @@ document.addEventListener("DOMContentLoaded", function () {
 //!===========================================================
 //!           New mulitstep form popup code End
 //! ===========================================================
+
+//!===========================================================
+//!     Smart Match Popup start
+//!===========================================================
+
+//? displaying 3 bannar randomly
+const apBanners = document.querySelectorAll(".ap_banner");
+if (apBanners.length > 0) {
+   const randomIndex = Math.floor(Math.random() * apBanners.length);
+   apBanners.forEach(function (banner, index) {
+      banner.style.display = index === randomIndex ? "block" : "none";
+   });
+}
+
+//? --- Banner button click handlers Start ---
+const smtPopup = document.querySelector(".smt_popup");
+const smartMatchRequest = document.getElementById("smartMatchRequest");
+const howsmWorks = document.getElementById("howsmWorks");
+
+document.querySelectorAll(".ap_start_btn").forEach(function (btn) {
+   btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      document.body.style.overflow = "hidden";
+      if (smtPopup) smtPopup.style.display = "flex";
+      if (smartMatchRequest) smartMatchRequest.style.display = "block";
+      if (howsmWorks) howsmWorks.style.display = "none";
+   });
+});
+
+document.querySelectorAll(".ap_how_button").forEach(function (btn) {
+   btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      document.body.style.overflow = "hidden";
+      if (smtPopup) smtPopup.style.display = "flex";
+      if (howsmWorks) howsmWorks.style.display = "block";
+      if (smartMatchRequest) smartMatchRequest.style.display = "none";
+   });
+});
+//? --- Banner button click handlers End ---
+
+//? --- Close button handler Start ---
+document.querySelectorAll(".apPopClose").forEach(function (btn) {
+   btn.addEventListener("click", function () {
+      if (smtPopup) smtPopup.style.display = "none";
+      document.body.style.overflow = "auto";
+      smtPopup
+         .querySelectorAll(".smt_match_request, .stepOne")
+         .forEach(function (el) {
+            el.style.display = "none";
+         });
+   });
+});
+//? --- Close button handler End ---
+
+//? --- Proceed to Step One handlers Start ---
+const stepOne = document.getElementById("stepOne");
+
+document
+   .querySelectorAll(".prc_to_match a, #smwcontinue")
+   .forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+         e.preventDefault();
+         if (smartMatchRequest) smartMatchRequest.style.display = "none";
+         if (howsmWorks) howsmWorks.style.display = "none";
+         if (stepOne) stepOne.style.display = "block";
+      });
+   });
+//? --- Proceed to Step One handlers End ---
+
+//? --- Step Navigation (Next / Prev) Start ---
+const smSteps = [
+   "stepOne",
+   "stepTwo",
+   "stepThree",
+   "stepFour",
+   "stepFive",
+   "stepSix",
+];
+
+document.querySelectorAll(".ap_pagiantion").forEach(function (pagination) {
+   const prevBtn = pagination.querySelector("#ap_prev");
+   const nextBtn = pagination.querySelector("#ap_next");
+   const parentStep = pagination.closest(".stepOne");
+   if (!parentStep) return;
+
+   const currentId = parentStep.id;
+   const currentIndex = smSteps.indexOf(currentId);
+
+   if (prevBtn) {
+      prevBtn.addEventListener("click", function () {
+         if (currentIndex <= 0) {
+            parentStep.style.display = "none";
+            if (smartMatchRequest) smartMatchRequest.style.display = "block";
+         } else {
+            parentStep.style.display = "none";
+            const prevStep = document.getElementById(smSteps[currentIndex - 1]);
+            if (prevStep) prevStep.style.display = "block";
+         }
+      });
+   }
+
+   if (nextBtn) {
+      nextBtn.addEventListener("click", function () {
+         if (currentIndex < smSteps.length - 1) {
+            parentStep.style.display = "none";
+            const nextStepId = smSteps[currentIndex + 1];
+            const nextStep = document.getElementById(nextStepId);
+            if (nextStep) nextStep.style.display = "block";
+            if (nextStepId === "stepFive") initStepFiveDateTimePicker();
+         }
+      });
+   }
+});
+//? --- Step Navigation (Next / Prev) End ---
+
+//? --- makding custom date and time picker Start ---
+function initStepFiveDateTimePicker() {
+   const container = document.querySelector(".stepFiveDateWrapper");
+   if (!container) return;
+
+   // ── Read trip data from sessionStorage ────────────────────
+   const raw = sessionStorage.getItem("storeData");
+   if (!raw) {
+      container.innerHTML =
+         '<p style="text-align:center;color:#999;">No trip data found.</p>';
+      return;
+   }
+
+   const details = JSON.parse(raw);
+
+   // ── Helper: format date for display ──────────────────────
+   function smFormatDateDisplay(dateStr) {
+      if (!dateStr) return "Select Date";
+      const parts = dateStr.split("-");
+      if (parts.length !== 3) return "Select Date";
+      const date = new Date(
+         parseInt(parts[0], 10),
+         parseInt(parts[1], 10) - 1,
+         parseInt(parts[2], 10),
+      );
+      return date.toLocaleDateString("en-US", {
+         day: "numeric",
+         month: "short",
+         year: "numeric",
+      });
+   }
+
+   // ── Helper: generate 48 time slots (30-min intervals) ────
+   function smGenerateTimeSlots() {
+      const slots = [];
+      for (let h = 0; h < 24; h++) {
+         for (let m = 0; m < 60; m += 30) {
+            const hour12 = h % 12 === 0 ? 12 : h % 12;
+            const ampm = h < 12 ? "AM" : "PM";
+            slots.push(
+               String(hour12).padStart(2, "0") +
+                  ":" +
+                  (m === 0 ? "00" : "30") +
+                  " " +
+                  ampm,
+            );
+         }
+      }
+      return slots;
+   }
+
+   // ── Helper: build one leg's HTML ─────────────────────────
+   function smBuildLegHTML(legIndex, badgeText, dateValue) {
+      const displayDate = smFormatDateDisplay(dateValue);
+      return `
+         <div class="dtp_leg_block" data-leg-index="${legIndex}">
+            <div class="dtp_leg_badge">${badgeText}</div>
+            <div class="dtp_leg_fields">
+               <div class="dtp_date_field">
+                  <label>DEPARTURE DATE</label>
+                  <div class="dtp_date_input_wrapper">
+                     <input type="text" class="store-date-input" data-leg-index="${legIndex}" data-date-value="${dateValue || ""}" value="${displayDate}" readonly placeholder="Select Date" />
+                     <img src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a5dcef85210fea67e54f59a_date.svg" alt="calendar" class="dtp_date_icon" />
+                     <div class="dtp_calendar_dropdown" style="display:none;">
+                        <div class="calendar-wrapper">
+                           <div class="month-nav">
+                              <button type="button" class="cal_prev">
+                                 <img src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a5cb7fb70221493ca0848e4_Group%203.svg" alt="prev" />
+                              </button>
+                              <h3 class="cal_month_year"></h3>
+                              <button type="button" class="cal_next">
+                                 <img src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a5cb7fbe1af4cb77dfe4a01_Group%202.svg" alt="next" />
+                              </button>
+                           </div>
+                           <div class="days-header">
+                              <span>SUN</span><span>MON</span><span>TUE</span><span>WED</span>
+                              <span>THU</span><span>FRI</span><span>SAT</span>
+                           </div>
+                           <ul class="days-grid"></ul>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="dtp_time_field">
+                   <label>PREFERRED DEPARTURE TIME</label>
+                   <div class="dtp_time_input_wrapper">
+                      <input type="text" class="departure-time-input" data-leg-index="${legIndex}" readonly placeholder="Select time" value="" />
+                      <img src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a5dcef819824fd8eee58abe_clock.svg" alt="clock" class="dtp_time_icon" />
+                      <div class="time-dropdown" style="display:none;"></div>
+                   </div>
+               </div>
+            </div>
+         </div>
+      `;
+   }
+
+   // ── Detect trip type & build legs ────────────────────────
+   const wayLower = (details.way || "").toLowerCase();
+   const isOneWay = wayLower.includes("one");
+   const isMultiCity = wayLower.includes("multi");
+   const isRoundTrip = !isOneWay && !isMultiCity;
+
+   const formattedDate = details.dateAsText || "";
+   const formattedReturnDate = details.returnDateAsText || "";
+
+   let tripHTML = "";
+
+   if (isOneWay) {
+      tripHTML = smBuildLegHTML(
+         0,
+         `Leg 1: ${details.fromShortName || ""} → ${details.toShortName || ""}`,
+         formattedDate,
+      );
+   } else if (isRoundTrip) {
+      tripHTML =
+         smBuildLegHTML(
+            0,
+            `Leg 1: ${details.fromShortName || ""} → ${details.toShortName || ""}`,
+            formattedDate,
+         ) +
+         smBuildLegHTML(
+            1,
+            `Leg 2: ${details.toShortName || ""} → ${details.fromShortName || ""}`,
+            formattedReturnDate,
+         );
+   } else if (isMultiCity) {
+      const dates = Array.isArray(details.dateAsText)
+         ? details.dateAsText
+         : [details.dateAsText];
+      const fromNames = Array.isArray(details.fromShortName)
+         ? details.fromShortName
+         : [details.fromShortName];
+      const toNames = Array.isArray(details.toShortName)
+         ? details.toShortName
+         : [details.toShortName];
+
+      for (let i = 0; i < dates.length; i++) {
+         tripHTML += smBuildLegHTML(
+            i,
+            `Leg ${i + 1}: ${fromNames[i] || ""} → ${toNames[i] || ""}`,
+            dates[i] || "",
+         );
+      }
+   }
+
+   container.innerHTML = tripHTML;
+
+   // ── Month names ──────────────────────────────────────────
+   const smMonths = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+   ];
+
+   // ── Setup custom date pickers (per leg) ──────────────────
+   container.querySelectorAll(".store-date-input").forEach(function (input) {
+      var dropdown = input
+         .closest(".dtp_date_input_wrapper")
+         .querySelector(".dtp_calendar_dropdown");
+      var daysGrid = dropdown.querySelector(".days-grid");
+      var monthYearText = dropdown.querySelector(".cal_month_year");
+      var prevBtn = dropdown.querySelector(".cal_prev");
+      var nextBtn = dropdown.querySelector(".cal_next");
+
+      var initialDate = input.getAttribute("data-date-value");
+      var currYear, currMonth;
+      var selectedDate = null;
+
+      if (initialDate && initialDate.split("-").length === 3) {
+         var p = initialDate.split("-");
+         currYear = parseInt(p[0], 10);
+         currMonth = parseInt(p[1], 10) - 1;
+         selectedDate = {
+            day: parseInt(p[2], 10),
+            month: currMonth,
+            year: currYear,
+         };
+      } else {
+         var now = new Date();
+         currYear = now.getFullYear();
+         currMonth = now.getMonth();
+      }
+
+      var isSameDate = function (d1, d2) {
+         return (
+            d1 &&
+            d2 &&
+            d1.day === d2.day &&
+            d1.month === d2.month &&
+            d1.year === d2.year
+         );
+      };
+
+      function renderCalendar() {
+         var firstDayofMonth = new Date(currYear, currMonth, 1).getDay();
+         var lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate();
+         var lastDayofLastMonth = new Date(currYear, currMonth, 0).getDate();
+         var lastDayofMonth = new Date(
+            currYear,
+            currMonth,
+            lastDateofMonth,
+         ).getDay();
+
+         var now = new Date();
+         var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+         var liTag = "";
+
+         // Previous month padding
+         var prevMonthVal = currMonth === 0 ? 11 : currMonth - 1;
+         var prevMonthYear = currMonth === 0 ? currYear - 1 : currYear;
+
+         for (var i = firstDayofMonth; i > 0; i--) {
+            var day = lastDayofLastMonth - i + 1;
+            var dateToCheck = new Date(prevMonthYear, prevMonthVal, day);
+            var className = "prev-month-day";
+
+            if (dateToCheck < today) {
+               className += " disabled";
+            } else {
+               var currentDayObj = {
+                  day: day,
+                  month: prevMonthVal,
+                  year: prevMonthYear,
+               };
+               if (isSameDate(currentDayObj, selectedDate)) {
+                  className += " active";
+               }
+            }
+            liTag += `<li class="${className}" data-day="${day}" data-month="${prevMonthVal}" data-year="${prevMonthYear}">${day}</li>`;
+         }
+
+         // Current month days
+         for (var i = 1; i <= lastDateofMonth; i++) {
+            var dateToCheck = new Date(currYear, currMonth, i);
+            var className = "";
+
+            if (dateToCheck < today) {
+               className = "disabled";
+            } else {
+               var currentDayObj = {
+                  day: i,
+                  month: currMonth,
+                  year: currYear,
+               };
+               if (isSameDate(currentDayObj, selectedDate)) {
+                  className = "active";
+               }
+            }
+            liTag += `<li class="${className}" data-day="${i}" data-month="${currMonth}" data-year="${currYear}">${i}</li>`;
+         }
+
+         // Next month padding
+         var nextMonthVal = currMonth === 11 ? 0 : currMonth + 1;
+         var nextMonthYear = currMonth === 11 ? currYear + 1 : currYear;
+
+         for (var i = lastDayofMonth; i < 6; i++) {
+            var day = i - lastDayofMonth + 1;
+            liTag += `<li class="prev-month-day" data-day="${day}" data-month="${nextMonthVal}" data-year="${nextMonthYear}">${day}</li>`;
+         }
+
+         monthYearText.textContent = `${smMonths[currMonth].toUpperCase()}, ${currYear}`;
+         daysGrid.innerHTML = liTag;
+
+         // Attach click handlers to selectable days
+         daysGrid.querySelectorAll("li:not(.disabled)").forEach(function (li) {
+            li.addEventListener("click", function (e) {
+               e.stopPropagation();
+               var d = parseInt(li.getAttribute("data-day"));
+               var m = parseInt(li.getAttribute("data-month"));
+               var y = parseInt(li.getAttribute("data-year"));
+
+               selectedDate = { day: d, month: m, year: y };
+               var dateStr = `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+               input.value = smFormatDateDisplay(dateStr);
+               input.setAttribute("data-date-value", dateStr);
+               input.style.border = "";
+               dropdown.style.display = "none";
+            });
+         });
+      }
+
+      // Month navigation
+      prevBtn.addEventListener("click", function (e) {
+         e.stopPropagation();
+         currMonth--;
+         if (currMonth < 0) {
+            currMonth = 11;
+            currYear--;
+         }
+         renderCalendar();
+      });
+
+      nextBtn.addEventListener("click", function (e) {
+         e.stopPropagation();
+         currMonth++;
+         if (currMonth > 11) {
+            currMonth = 0;
+            currYear++;
+         }
+         renderCalendar();
+      });
+
+      // Open calendar on input or icon click
+      var dateIcon = input
+         .closest(".dtp_date_input_wrapper")
+         .querySelector(".dtp_date_icon");
+
+      var openCalendar = function (e) {
+         e.stopPropagation();
+         // Close all other dropdowns in the container
+         container
+            .querySelectorAll(".dtp_calendar_dropdown")
+            .forEach(function (dd) {
+               if (dd !== dropdown) dd.style.display = "none";
+            });
+         container.querySelectorAll(".time-dropdown").forEach(function (dd) {
+            dd.style.display = "none";
+         });
+         renderCalendar();
+         dropdown.style.display = "block";
+      };
+
+      input.addEventListener("click", openCalendar);
+      dateIcon.addEventListener("click", openCalendar);
+
+      // Close on outside click
+      document.addEventListener("click", function (e) {
+         if (
+            !dropdown.contains(e.target) &&
+            e.target !== input &&
+            e.target !== dateIcon
+         ) {
+            dropdown.style.display = "none";
+         }
+      });
+   });
+
+   // ── Setup time dropdowns (per leg) ───────────────────────
+   var timeInputs = container.querySelectorAll(".departure-time-input");
+   var timeDropdowns = container.querySelectorAll(".time-dropdown");
+   var slots = smGenerateTimeSlots();
+
+   timeInputs.forEach(function (input, idx) {
+      var dropdown = timeDropdowns[idx];
+      if (!dropdown) return;
+
+      // Populate time slots
+      dropdown.innerHTML =
+         `<div class="time-reset">RESET</div>` +
+         slots
+            .map(function (time) {
+               return `<div class="time-slot">${time}</div>`;
+            })
+            .join("");
+
+      var timeIcon = input
+         .closest(".dtp_time_input_wrapper")
+         .querySelector(".dtp_time_icon");
+
+      var openTimeDropdown = function (e) {
+         e.stopPropagation();
+         // Close all other dropdowns in the container
+         container.querySelectorAll(".time-dropdown").forEach(function (dd) {
+            if (dd !== dropdown) dd.style.display = "none";
+         });
+         container
+            .querySelectorAll(".dtp_calendar_dropdown")
+            .forEach(function (dd) {
+               dd.style.display = "none";
+            });
+         dropdown.style.display = "block";
+      };
+
+      input.addEventListener("click", openTimeDropdown);
+      timeIcon.addEventListener("click", openTimeDropdown);
+
+      // Close on outside click
+      document.addEventListener("click", function (e) {
+         if (
+            !dropdown.contains(e.target) &&
+            e.target !== input &&
+            e.target !== timeIcon
+         ) {
+            dropdown.style.display = "none";
+         }
+      });
+
+      // Handle slot selection and reset
+      dropdown.addEventListener("click", function (e) {
+         if (e.target.classList.contains("time-slot")) {
+            input.value = e.target.textContent;
+            input.style.border = "";
+            dropdown.style.display = "none";
+         }
+         if (e.target.classList.contains("time-reset")) {
+            input.value = "";
+            dropdown.style.display = "none";
+         }
+      });
+   });
+}
+
+/**
+ * Collects all date and time values from Step Five's date/time picker.
+ * Call this at Step 7 submit to get clean data for API submission.
+ */
+function getStepFiveDateTimeData() {
+   var container = document.querySelector(".stepFiveDateWrapper");
+   if (!container) return { legs: [], allValid: false };
+
+   // ── Helper: convert 12-hour time to 24-hour ─────────────
+   function smTime12to24(timeStr) {
+      if (!timeStr) return "00:00:00";
+      var match = timeStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+      if (!match) return "00:00:00";
+      var h = parseInt(match[1], 10);
+      var m = match[2];
+      var ampm = match[3].toUpperCase();
+      if (ampm === "AM" && h === 12) h = 0;
+      if (ampm === "PM" && h !== 12) h += 12;
+      return String(h).padStart(2, "0") + ":" + m + ":00";
+   }
+
+   // ── Helper: date + time → Unix timestamp (ms) ────────────
+   function smDateTimeToUnix(dateStr, timeStr) {
+      var dp = dateStr.split("-").map(Number);
+      var tp = (timeStr || "00:00:00").split(":").map(Number);
+      return Date.UTC(dp[0], dp[1] - 1, dp[2], tp[0], tp[1], tp[2]);
+   }
+
+   // ── Helper: date + time → display text ───────────────────
+   function smDateTimeToText(dateStr, timeStr) {
+      var dp = dateStr.split("-").map(Number);
+      var tp = (timeStr || "00:00:00").split(":").map(Number);
+      var date = new Date(dp[0], dp[1] - 1, dp[2], tp[0], tp[1]);
+      return date.toLocaleString("en-US", {
+         month: "short",
+         day: "numeric",
+         year: "numeric",
+         hour: "numeric",
+         minute: "2-digit",
+         hour12: true,
+      });
+   }
+
+   var dateInputs = container.querySelectorAll(".store-date-input");
+   var timeInputs = container.querySelectorAll(".departure-time-input");
+   var legs = [];
+   var allValid = true;
+
+   dateInputs.forEach(function (dateInput, i) {
+      var dateValue = dateInput.getAttribute("data-date-value") || "";
+      var timeValue = timeInputs[i] ? timeInputs[i].value || "" : "";
+      var time24 = smTime12to24(timeValue);
+
+      var leg = {
+         legIndex: i,
+         dateValue: dateValue,
+         dateDisplay: dateValue
+            ? new Date(
+                 parseInt(dateValue.split("-")[0], 10),
+                 parseInt(dateValue.split("-")[1], 10) - 1,
+                 parseInt(dateValue.split("-")[2], 10),
+              ).toLocaleDateString("en-US", {
+                 day: "numeric",
+                 month: "short",
+                 year: "numeric",
+              })
+            : "",
+         timeValue: timeValue,
+         time24: time24,
+         dateTimeText:
+            dateValue && timeValue ? smDateTimeToText(dateValue, time24) : "",
+         timestamp: dateValue ? smDateTimeToUnix(dateValue, time24) : null,
+      };
+
+      if (!dateValue || !timeValue) {
+         allValid = false;
+      }
+
+      legs.push(leg);
+   });
+
+   // Highlight missing fields with red border
+   if (!allValid) {
+      dateInputs.forEach(function (input) {
+         if (
+            !input.getAttribute("data-date-value") ||
+            input.getAttribute("data-date-value") === ""
+         ) {
+            input.style.border = "1.5px solid red";
+         }
+      });
+      timeInputs.forEach(function (input) {
+         if (!input.value) {
+            input.style.border = "1.5px solid red";
+         }
+      });
+   }
+
+   return { legs: legs, allValid: allValid };
+}
+
+//? --- makding custom date and time picker End ---
+
+//!===========================================================
+//!     Smart Match Popup End
+//!===========================================================

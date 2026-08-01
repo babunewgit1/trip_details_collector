@@ -7,7 +7,7 @@
       <link rel="stylesheet" href="smart_match.css" />
    </head>
    <body>
-      <div class="smt_popup">
+      <div style="display: none" class="smt_popup">
          <div class="smt_popup_wrapper">
             <!-- smart match request popup start-->
             <div
@@ -110,14 +110,15 @@
                         recommendations automatically—saving you time while
                         helping you find the best aircraft for your mission.
                      </p>
-
-                     <button
-                        id="smwcontinue"
-                        class="button fill_button"
-                        type="button"
-                     >
-                        CONTINUE
-                     </button>
+                     <div class="prc_to_match">
+                        <button
+                           id="smwcontinue"
+                           class="button fill_button"
+                           type="button"
+                        >
+                           start my smart match
+                        </button>
+                     </div>
                   </div>
                </div>
             </div>
@@ -205,7 +206,7 @@
                            </div>
                            <div class="apso_radio_label">
                               <input
-                                 type="radio"
+                                 type="checkbox"
                                  name="aircraft_class"
                                  value="Turboprop"
                               />
@@ -222,7 +223,7 @@
                            </div>
                            <div class="apso_radio_label">
                               <input
-                                 type="radio"
+                                 type="checkbox"
                                  name="aircraft_class"
                                  value="Very Light Jet"
                               />
@@ -241,7 +242,7 @@
                            </div>
                            <div class="apso_radio_label">
                               <input
-                                 type="radio"
+                                 type="checkbox"
                                  name="aircraft_class"
                                  value="Light Jet"
                               />
@@ -258,7 +259,7 @@
                            </div>
                            <div class="apso_radio_label">
                               <input
-                                 type="radio"
+                                 type="checkbox"
                                  name="aircraft_class"
                                  value="Midsize Jet"
                               />
@@ -275,7 +276,7 @@
                            </div>
                            <div class="apso_radio_label">
                               <input
-                                 type="radio"
+                                 type="checkbox"
                                  name="aircraft_class"
                                  value="Super Midsize Jet"
                               />
@@ -294,7 +295,7 @@
                            </div>
                            <div class="apso_radio_label">
                               <input
-                                 type="radio"
+                                 type="checkbox"
                                  name="aircraft_class"
                                  value="Heavy Jet"
                               />
@@ -311,7 +312,7 @@
                            </div>
                            <div class="apso_radio_label">
                               <input
-                                 type="radio"
+                                 type="checkbox"
                                  name="aircraft_class"
                                  value="Ultra Long Range"
                               />
@@ -330,7 +331,7 @@
                            </div>
                            <div class="apso_radio_label">
                               <input
-                                 type="radio"
+                                 type="checkbox"
                                  name="aircraft_class"
                                  value="VIP Airliner"
                               />
@@ -348,12 +349,12 @@
                         />
                         Prev
                      </button>
-                     <button id="ap_prev">
+                     <button id="ap_next">
+                        Next
                         <img
                            src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447c7ac035cdb7c13bea_ap_next.png"
                            alt="next icon"
                         />
-                        Prev
                      </button>
                   </div>
                </div>
@@ -522,7 +523,7 @@
                         />
                         Prev
                      </button>
-                     <button id="ap_prev">
+                     <button id="ap_next">
                         Next
                         <img
                            src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447c7ac035cdb7c13bea_ap_next.png"
@@ -751,7 +752,7 @@
                         />
                         Prev
                      </button>
-                     <button id="ap_prev">
+                     <button id="ap_next">
                         Next
                         <img
                            src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447c7ac035cdb7c13bea_ap_next.png"
@@ -998,7 +999,7 @@
                         />
                         Prev
                      </button>
-                     <button id="ap_prev">
+                     <button id="ap_next">
                         Next
                         <img
                            src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447c7ac035cdb7c13bea_ap_next.png"
@@ -1098,7 +1099,7 @@
                         />
                         Prev
                      </button>
-                     <button id="ap_prev">
+                     <button id="ap_next">
                         Next
                         <img
                            src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c447c7ac035cdb7c13bea_ap_next.png"
@@ -1111,7 +1112,7 @@
             <!-- Step Five popup End-->
 
             <!-- Step Six popup Start-->
-            <div id="stepSix" class="stepOne">
+            <div style="display: none" id="stepSix" class="stepOne">
                <div class="smt_mr_heading">
                   <h4>Smart Match Request</h4>
                   <button class="apPopClose" type="button">
@@ -1271,6 +1272,251 @@
                </div>
             </div>
             <!-- Step Six popup End-->
+
+            <!-- Confirmation popup Start-->
+            <div style="display: none" id="confirm_step" class="stepOne">
+               <div class="smt_mr_heading">
+                  <h4>Confirmation</h4>
+                  <button class="apPopClose" type="button">
+                     <img
+                        src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6929904e2a85631be7392ee2_ms_cross.webp"
+                        alt="cross_icon"
+                     />
+                  </button>
+               </div>
+               <div class="stepOne_wrapper">
+                  <div class="apso_step">
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>01</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>02</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>03</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>04</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>05</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                     <div class="apso_step_item apcompleted">
+                        <div class="apso_step_item_text">
+                           <p>06</p>
+                           <img
+                              src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/696cd0b4485b56639f9939c2_green_check.webp"
+                              alt="checkbox"
+                           />
+                        </div>
+                        <div class="apso_step_bar"></div>
+                     </div>
+                  </div>
+                  <div class="smt_mr_cnt px30">
+                     <div class="smt_mr_cnt_icon">
+                        <img
+                           src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6db0cb9899a5d62af0c587_planexp.avif"
+                           alt="smt_mr_icon"
+                        />
+                     </div>
+                     <div class="smt_mr_text">
+                        <h2 class="heading2 imc-heading">
+                           <span class="hlight">Your</span> Smart Match
+                           <span class="hlight">Has Started</span>
+                        </h2>
+                        <p>Thank you.</p>
+                        <p>
+                           Jettly is now searching our live aircraft network to
+                           find the best options for your trip.
+                        </p>
+                        <p>
+                           Unlike a traditional search, Smart Match continues
+                           working behind the scenes for up to <b>24 hours,</b>
+                           <br />
+                           monitoring availability and pricing as additional
+                           aircraft become available.
+                        </p>
+
+                        <div class="constep_cnt_block">
+                           <div class="apso_class_heading">
+                              <div class="apsoh_bar"></div>
+                              <h3>What Happens Next?</h3>
+                              <div class="apsoh_bar"></div>
+                           </div>
+                           <div class="constep_grid_block">
+                              <div class="cng_item">
+                                 <img
+                                    src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6db7310aabd036ce421fc8_cp1.avif"
+                                    alt="item_img"
+                                 />
+                                 <div class="cng_item_text">
+                                    <h4>Within the Next Hour</h4>
+                                    <p>
+                                       You’ll typically receive your first
+                                       personalized aircraft recommendations by
+                                       email within 60 minutes during business
+                                       hours.
+                                    </p>
+                                 </div>
+                              </div>
+                              <div class="cng_item">
+                                 <img
+                                    src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6db731f96d8a3a8fc16bd1_cp2.avif"
+                                    alt="item_img"
+                                 />
+                                 <div class="cng_item_text">
+                                    <h4>Over the Next 24 Hours</h4>
+                                    <p>
+                                       Smart Match continues searching
+                                       automatically.
+                                    </p>
+                                    <p>
+                                       If better aircraft, improved pricing, or
+                                       additional availability becomes
+                                       available, we’ll send updated
+                                       recommendations directly to your inbox.
+                                    </p>
+                                    <p>No additional searching is required.</p>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="constep_cnt_block">
+                           <div class="apso_class_heading">
+                              <div class="apsoh_bar"></div>
+                              <h3>You’ll Receive</h3>
+                              <div class="apsoh_bar"></div>
+                           </div>
+                           <div class="con_check_step_wrapper">
+                              <div class="con_check_step_item">
+                                 <img
+                                    src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c8d21e276e996d7d504fe_check.png"
+                                    alt="check_step"
+                                 />
+                                 <p>
+                                    Up to 25 personalized aircraft
+                                    recommendations
+                                 </p>
+                              </div>
+                              <div class="con_check_step_item">
+                                 <img
+                                    src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c8d21e276e996d7d504fe_check.png"
+                                    alt="check_step"
+                                 />
+                                 <p>
+                                    Matching aircraft based on your preferences
+                                 </p>
+                              </div>
+                              <div class="con_check_step_item">
+                                 <img
+                                    src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c8d21e276e996d7d504fe_check.png"
+                                    alt="check_step"
+                                 />
+                                 <p>New aircraft as they become available</p>
+                              </div>
+                              <div class="con_check_step_item">
+                                 <img
+                                    src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c8d21e276e996d7d504fe_check.png"
+                                    alt="check_step"
+                                 />
+                                 <p>Better pricing opportunities</p>
+                              </div>
+                              <div class="con_check_step_item">
+                                 <img
+                                    src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c8d21e276e996d7d504fe_check.png"
+                                    alt="check_step"
+                                 />
+                                 <p>Direct booking links</p>
+                              </div>
+                              <div class="con_check_step_item">
+                                 <img
+                                    src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6c8d21e276e996d7d504fe_check.png"
+                                    alt="check_step"
+                                 />
+                                 <p>Continued updates for up to 24 hours</p>
+                              </div>
+                           </div>
+                           <div class="con_need_help">
+                              <h2 class="heading2">Need Help?</h2>
+                              <p>
+                                 Our Client Experience Team is always available
+                                 if you’d like to modify your preferences or
+                                 discuss your trip.
+                              </p>
+                              <ul>
+                                 <li>
+                                    <a href="mailto:departures@jettly.com"
+                                       ><img
+                                          src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6dbc72c104ee503d9ddfed_mail-inbox-app.avif"
+                                          alt="mail_icon"
+                                       />departures@jettly.com</a
+                                    >
+                                 </li>
+                                 <li>
+                                    <a href="tel:+1 (866) 448 2358"
+                                       ><img
+                                          src="https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6dbc72d608e7331084a552_telephone-call.avif"
+                                          alt="phone_icon"
+                                       />+1 (866) 448 2358</a
+                                    >
+                                 </li>
+                              </ul>
+                              <div class="con_need_button">
+                                 <button
+                                    id="smart_ok"
+                                    class="button fill_button"
+                                 >
+                                    Start a New Search
+                                 </button>
+                                 <button
+                                    id="smart_close"
+                                    class="button full-width black_ghost 100%-width"
+                                 >
+                                    Return to Search Results
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- Confirmation popup End-->
          </div>
       </div>
    </body>
