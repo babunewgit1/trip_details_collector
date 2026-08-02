@@ -377,6 +377,13 @@
    font-weight: 600;
 }
 
+/* Disabled budget option styling */
+.step2_radio_item.disabled_budget {
+   opacity: 0.4;
+   cursor: not-allowed;
+   pointer-events: none;
+}
+
 /* Step 3 Checkbox */
 .step3checkboxwrapper {
    display: grid;
@@ -495,12 +502,20 @@
    row-gap: 8px;
 }
 
-.step6_chip {
-   cursor: pointer;
+.step6_example_title {
+   text-align: center;
+   font-size: 18px;
+   letter-spacing: 0.6px;
+   color: #333;
+   font-weight: 600;
+   margin-bottom: 5px;
 }
 
-.step6_chip input[type="checkbox"] {
-   display: none;
+.step6_chips_wrapper {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 8px;
 }
 
 .step6_chip_text {
@@ -509,15 +524,10 @@
    border-radius: 50px;
    background-color: #fafafa;
    font-size: 15px;
-   color: #1e1e1e;
-   border: 1px solid #dcdcdc;
-   transition: all 0.2s ease;
-}
-
-.step6_chip input[type="checkbox"]:checked ~ .step6_chip_text {
-   border-color: #ff5d48;
-   color: #fff;
-   background-color: #ff5d48;
+   color: #999;
+   border: 1px solid #e8e8e8;
+   cursor: default;
+   user-select: none;
 }
 
 .submit_task {
@@ -691,4 +701,9 @@
 .ap_how_button a:hover {
    background-color: #ff5d47 !important;
    border-color: #ff5d47 !important;
+}
+
+.stepFiveDateWrapper {
+   max-width: 700px;
+   margin: auto;
 }

@@ -3165,12 +3165,80 @@ document.querySelectorAll(".ap_pagiantion").forEach(function (pagination) {
             const nextStepId = smSteps[currentIndex + 1];
             const nextStep = document.getElementById(nextStepId);
             if (nextStep) nextStep.style.display = "block";
+            if (nextStepId === "stepTwo") initStepTwoBudgetDisable();
             if (nextStepId === "stepFive") initStepFiveDateTimePicker();
          }
       });
    }
 });
 //? --- Step Navigation (Next / Prev) End ---
+
+//? --- Budget Disable Logic Based on Hot Deals Start ---
+function initStepTwoBudgetDisable() {
+   const stepTwo = document.getElementById("stepTwo");
+   if (!stepTwo) return;
+
+   const budgetRadios = stepTwo.querySelectorAll('input[name="target_budget"]');
+   if (!budgetRadios.length) return;
+
+   // Reset all budget options to enabled first
+   budgetRadios.forEach(function (radio) {
+      radio.disabled = false;
+      const label = radio.closest(".step2_radio_item");
+      if (label) label.classList.remove("disabled_budget");
+   });
+
+   // Check if hot deals exist in the API response
+   if (
+      typeof apiData === "undefined" ||
+      !apiData.response ||
+      !apiData.response.hot_deal_aircraft ||
+      !apiData.response.hot_deal_aircraft.length
+   ) {
+      // No hot deals — all budget options remain enabled
+      return;
+   }
+
+   const hotDeals = apiData.response.hot_deal_aircraft;
+
+   // Get the lowest price from hot deals using aircraftCalculatedValues
+   const hotDealPrices = [];
+   hotDeals.forEach(function (deal) {
+      const price = window.aircraftCalculatedValues
+         ? window.aircraftCalculatedValues[deal._id]
+         : null;
+      if (price && price > 0) {
+         hotDealPrices.push(price);
+      }
+   });
+
+   // If no valid prices found, keep all enabled
+   if (!hotDealPrices.length) return;
+
+   const lowestHotDealPrice = Math.min(...hotDealPrices);
+
+   // Disable budget options that are less than the lowest hot deal price
+   // Note: The highest budget option ($200,000+) is never disabled since it represents "above $200K"
+   const highestBudgetValue = Math.max(
+      ...Array.from(budgetRadios).map(function (r) {
+         return parseInt(r.value, 10);
+      }),
+   );
+
+   budgetRadios.forEach(function (radio) {
+      const budgetValue = parseInt(radio.value, 10);
+      if (
+         budgetValue < lowestHotDealPrice &&
+         budgetValue !== highestBudgetValue
+      ) {
+         radio.disabled = true;
+         radio.checked = false; // Uncheck if it was selected
+         const label = radio.closest(".step2_radio_item");
+         if (label) label.classList.add("disabled_budget");
+      }
+   });
+}
+//? --- Budget Disable Logic Based on Hot Deals End ---
 
 //? --- makding custom date and time picker Start ---
 function initStepFiveDateTimePicker() {
