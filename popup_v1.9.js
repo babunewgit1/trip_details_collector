@@ -3071,6 +3071,20 @@ if (apBanners.length > 0) {
    });
 }
 
+//? --- Smart Match Toast Function Start ---
+function showSmtToast(message) {
+   const smtToastMessage = document.getElementById("smtToastMessage");
+   const smtToastEl = document.getElementById("smtToast");
+   if (smtToastMessage && smtToastEl) {
+      smtToastMessage.textContent = message;
+      smtToastEl.style.display = "block";
+      setTimeout(function () {
+         smtToastEl.style.display = "none";
+      }, 4000);
+   }
+}
+//? --- Smart Match Toast Function End ---
+
 //? --- Banner button click handlers Start ---
 const smtPopup = document.querySelector(".smt_popup");
 const smartMatchRequest = document.getElementById("smartMatchRequest");
@@ -3079,6 +3093,17 @@ const howsmWorks = document.getElementById("howsmWorks");
 document.querySelectorAll(".ap_start_btn").forEach(function (btn) {
    btn.addEventListener("click", function (e) {
       e.preventDefault();
+      // Check if user is logged in
+      const userEmail = Cookies.get("userEmail");
+      const authToken = Cookies.get("authToken");
+      if (!userEmail || !authToken) {
+         // Not logged in — show login popup
+         const authFormsWrapper = document.getElementById("authFormsWrapper");
+         const loginForm = document.getElementById("loginForm");
+         if (authFormsWrapper) authFormsWrapper.style.display = "block";
+         if (loginForm) loginForm.style.display = "flex";
+         return;
+      }
       document.body.style.overflow = "hidden";
       if (smtPopup) smtPopup.style.display = "flex";
       if (smartMatchRequest) smartMatchRequest.style.display = "block";
@@ -3119,6 +3144,19 @@ document
    .forEach(function (btn) {
       btn.addEventListener("click", function (e) {
          e.preventDefault();
+         // Check if user is logged in
+         const userEmail = Cookies.get("userEmail");
+         var authToken = Cookies.get("authToken");
+         if (!userEmail || !authToken) {
+            // Not logged in — hide smart match popup and show login popup
+            if (smtPopup) smtPopup.style.display = "none";
+            const authFormsWrapper =
+               document.getElementById("authFormsWrapper");
+            const loginForm = document.getElementById("loginForm");
+            if (authFormsWrapper) authFormsWrapper.style.display = "block";
+            if (loginForm) loginForm.style.display = "flex";
+            return;
+         }
          if (smartMatchRequest) smartMatchRequest.style.display = "none";
          if (howsmWorks) howsmWorks.style.display = "none";
          if (stepOne) stepOne.style.display = "block";
@@ -3161,6 +3199,63 @@ document.querySelectorAll(".ap_pagiantion").forEach(function (pagination) {
    if (nextBtn) {
       nextBtn.addEventListener("click", function () {
          if (currentIndex < smSteps.length - 1) {
+            // Step 1 validation: at least 1 aircraft class must be selected
+            if (currentId === "stepOne") {
+               const checked = parentStep.querySelectorAll(
+                  'input[name="aircraft_class"]:checked',
+               );
+               if (checked.length === 0) {
+                  showSmtToast("Please select at least one aircraft class.");
+                  return;
+               }
+            }
+
+            // Step 2 validation: a budget option must be selected
+            if (currentId === "stepTwo") {
+               const budgetSelected = parentStep.querySelector(
+                  'input[name="target_budget"]:checked',
+               );
+               if (!budgetSelected) {
+                  showSmtToast("Please select a budget option.");
+                  return;
+               }
+            }
+
+            // Step 4 validation: all 3 sections must have at least 1 selection
+            if (currentId === "stepFour") {
+               const frequencySelected = parentStep.querySelector(
+                  'input[name="charter_flights_year"]:checked',
+               );
+               if (!frequencySelected) {
+                  showSmtToast("Please select charter flights per year.");
+                  return;
+               }
+
+               const interestChecked = parentStep.querySelectorAll(
+                  'input[name="interest_in"]:checked',
+               );
+               if (interestChecked.length === 0) {
+                  showSmtToast("Please select at least one interest.");
+                  return;
+               }
+
+               const cabinChecked = parentStep.querySelectorAll(
+                  'input[name="cabin_preference"]:checked',
+               );
+               if (cabinChecked.length === 0) {
+                  showSmtToast("Please select at least one cabin preference.");
+                  return;
+               }
+            }
+
+            // Step 5 validation: all dates and times must be filled
+            if (currentId === "stepFive") {
+               const stepFiveResult = getStepFiveDateTimeData();
+               if (!stepFiveResult.allValid) {
+                  showSmtToast("Please select date and time for all legs.");
+                  return;
+               }
+            }
             parentStep.style.display = "none";
             const nextStepId = smSteps[currentIndex + 1];
             const nextStep = document.getElementById(nextStepId);
@@ -3754,6 +3849,246 @@ function getStepFiveDateTimeData() {
 }
 
 //? --- makding custom date and time picker End ---
+
+//? --- Smart Match Submit Handler Start ---
+
+/**
+ * Collects all Smart Match popup data and submits to /smart_match API.
+ * Called when "Start My Smart Match" button (#submit_task) is clicked.
+ */
+function collectSmartMatchData() {
+   // ═══════════════════════════════════════════
+   // Step 1: Aircraft Classes (with grouping)
+   // ═══════════════════════════════════════════
+   const stepOne = document.getElementById("stepOne");
+   const aircraftChecked = stepOne
+      ? Array.from(
+           stepOne.querySelectorAll('input[name="aircraft_class"]:checked'),
+        ).map(function (cb) {
+           return cb.value;
+        })
+      : [];
+
+   // Grouping: Very Light Jet + Light Jet → lightjet
+   const lightjet =
+      aircraftChecked.indexOf("Very Light Jet") !== -1 ||
+      aircraftChecked.indexOf("Light Jet") !== -1
+         ? "yes"
+         : "no";
+
+   // Grouping: Heavy Jet + VIP Airliner → heavyjet (NOT Ultra Long Range)
+   const heavyjet =
+      aircraftChecked.indexOf("Heavy Jet") !== -1 ||
+      aircraftChecked.indexOf("VIP Airliner") !== -1
+         ? "yes"
+         : "no";
+
+   // Ultra Long Range → separate parameter
+   const ultralongrange =
+      aircraftChecked.indexOf("Ultra Long Range") !== -1 ? "yes" : "no";
+
+   // Individual parameters
+   const turboprop = aircraftChecked.indexOf("Turboprop") !== -1 ? "yes" : "no";
+   const midsizejet =
+      aircraftChecked.indexOf("Midsize Jet") !== -1 ? "yes" : "no";
+   const supermidsizejet =
+      aircraftChecked.indexOf("Super Midsize Jet") !== -1 ? "yes" : "no";
+
+   // ═══════════════════════════════════════════
+   // Step 2: Target Budget
+   // ═══════════════════════════════════════════
+   const stepTwo = document.getElementById("stepTwo");
+   const budgetRadio = stepTwo
+      ? stepTwo.querySelector('input[name="target_budget"]:checked')
+      : null;
+   const budget = budgetRadio ? parseInt(budgetRadio.value, 10) : 0;
+
+   // ═══════════════════════════════════════════
+   // Step 3: What's Most Important — SKIPPED (data not sent to API)
+   // ═══════════════════════════════════════════
+
+   // ═══════════════════════════════════════════
+   // Step 4: Charter Flights, Interest In, Cabin Preference
+   // ═══════════════════════════════════════════
+   const stepFour = document.getElementById("stepFour");
+
+   // 4a) Charter Flights/Year → frequency
+   const frequencyRadio = stepFour
+      ? stepFour.querySelector('input[name="charter_flights_year"]:checked')
+      : null;
+   const frequency = frequencyRadio ? frequencyRadio.value : "";
+
+   // 4b) Interest In → individual yes/no parameters
+   const interestChecked = stepFour
+      ? Array.from(
+           stepFour.querySelectorAll('input[name="interest_in"]:checked'),
+        ).map(function (cb) {
+           return cb.value;
+        })
+      : [];
+
+   const charterinterest =
+      interestChecked.indexOf("Charter") !== -1 ? "yes" : "no";
+   const jetcardinterest =
+      interestChecked.indexOf("Jet Card") !== -1 ? "yes" : "no";
+   const emptylegsinterest =
+      interestChecked.indexOf("Empty Legs") !== -1 ? "yes" : "no";
+   const ownershipinterest =
+      interestChecked.indexOf("Whole Ownership") !== -1 ? "yes" : "no";
+   const fractionalinterest =
+      interestChecked.indexOf("Fractional Ownership") !== -1 ? "yes" : "no";
+
+   // 4c) Cabin Preference → individual yes/no parameters
+   const cabinChecked = stepFour
+      ? Array.from(
+           stepFour.querySelectorAll('input[name="cabin_preference"]:checked'),
+        ).map(function (cb) {
+           return cb.value;
+        })
+      : [];
+
+   const lightpreferred = cabinChecked.indexOf("Light") !== -1 ? "yes" : "no";
+   const midsizepreferred =
+      cabinChecked.indexOf("Mid Size") !== -1 ? "yes" : "no";
+   const supermidpreferred =
+      cabinChecked.indexOf("Super Mid Size") !== -1 ? "yes" : "no";
+   const heavypreferred = cabinChecked.indexOf("Heavy") !== -1 ? "yes" : "no";
+   const turboproppreferred =
+      cabinChecked.indexOf("Turboprop") !== -1 ? "yes" : "no";
+
+   // ═══════════════════════════════════════════
+   // Step 5: Dates & Departure Times
+   // ═══════════════════════════════════════════
+   const stepFiveData = getStepFiveDateTimeData();
+   const dateAsTextList = [];
+   const dateList = [];
+
+   if (stepFiveData && stepFiveData.legs) {
+      stepFiveData.legs.forEach(function (leg) {
+         if (leg.dateTimeText) {
+            dateAsTextList.push(leg.dateTimeText);
+         }
+         if (leg.timestamp) {
+            dateList.push(leg.timestamp);
+         }
+      });
+   }
+
+   // ═══════════════════════════════════════════
+   // Step 6: Custom Requirements (message box)
+   // ═══════════════════════════════════════════
+   const stepSix = document.getElementById("stepSix");
+   const textarea = stepSix ? stepSix.querySelector("textarea") : null;
+   const customrequirements = textarea ? textarea.value.trim() : "";
+
+   // ═══════════════════════════════════════════
+   // Flight Request ID
+   // ═══════════════════════════════════════════
+   let flightrequestid = "";
+   if (typeof apiData !== "undefined" && apiData.response) {
+      flightrequestid = apiData.response.flightrequest || "";
+   }
+
+   // ═══════════════════════════════════════════
+   // Build final API payload
+   // ═══════════════════════════════════════════
+   const payload = {
+      flightrequestid: flightrequestid,
+      turboprop: turboprop,
+      lightjet: lightjet,
+      midsizejet: midsizejet,
+      supermidsizejet: supermidsizejet,
+      heavyjet: heavyjet,
+      ultralongrange: ultralongrange,
+      budget: budget,
+      frequency: frequency,
+      charterinterest: charterinterest,
+      jetcardinterest: jetcardinterest,
+      emptylegsinterest: emptylegsinterest,
+      ownershipinterest: ownershipinterest,
+      fractionalinterest: fractionalinterest,
+      turboproppreferred: turboproppreferred,
+      lightpreferred: lightpreferred,
+      midsizepreferred: midsizepreferred,
+      supermidpreferred: supermidpreferred,
+      heavypreferred: heavypreferred,
+      date_as_text: dateAsTextList,
+      date: dateList,
+   };
+
+   // Only add customrequirements if user wrote something
+   if (customrequirements) {
+      payload.customrequirements = customrequirements;
+   }
+
+   return payload;
+}
+
+/**
+ * Submit Smart Match data to API
+ */
+function submitSmartMatch() {
+   const submitBtn = document.getElementById("submit_task");
+   if (!submitBtn) return;
+
+   // Prevent double-click
+   submitBtn.disabled = true;
+   submitBtn.textContent = "Submitting...";
+
+   const payload = collectSmartMatchData();
+
+   console.log("Smart Match Payload:", payload);
+
+   const authToken = Cookies.get("authToken") || "";
+
+   fetch("https://operators-dashboard.bubbleapps.io/api/1.1/wf/smart_match", {
+      method: "POST",
+      headers: {
+         "Content-Type": "application/json",
+         Authorization: "Bearer " + authToken,
+      },
+      body: JSON.stringify(payload),
+   })
+      .then(function (response) {
+         return response.json().then(function (data) {
+            return { ok: response.ok, data: data };
+         });
+      })
+      .then(function (result) {
+         submitBtn.disabled = false;
+         submitBtn.textContent = "Start My Smart Match";
+
+         console.log("Smart Match API Response:", result.data);
+
+         if (result.ok) {
+            // Success — show confirmation step
+            const stepSix = document.getElementById("stepSix");
+            const confirmStep = document.getElementById("confirm_step");
+            if (stepSix) stepSix.style.display = "none";
+            if (confirmStep) confirmStep.style.display = "block";
+            showSmtToast("Smart Match request submitted successfully!");
+         } else {
+            showSmtToast("Something went wrong. Please try again.");
+         }
+      })
+      .catch(function (error) {
+         console.error("Smart Match API Error:", error);
+         submitBtn.disabled = false;
+         submitBtn.textContent = "Start My Smart Match";
+         showSmtToast("Something went wrong. Please try again.");
+      });
+}
+
+// Attach click handler to Submit button
+var smSubmitBtn = document.getElementById("submit_task");
+if (smSubmitBtn) {
+   smSubmitBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      submitSmartMatch();
+   });
+}
+
+//? --- Smart Match Submit Handler End ---
 
 //!===========================================================
 //!     Smart Match Popup End
