@@ -3085,6 +3085,43 @@ function showSmtToast(message) {
 }
 //? --- Smart Match Toast Function End ---
 
+//? --- Smart Match Form Reset Start ---
+function resetSmartMatchForm() {
+   const popup = document.querySelector(".smt_popup");
+   if (!popup) return;
+
+   // Uncheck all checkboxes
+   popup
+      .querySelectorAll('input[type="checkbox"]:checked')
+      .forEach(function (cb) {
+         cb.checked = false;
+      });
+
+   // Uncheck all radios
+   popup.querySelectorAll('input[type="radio"]:checked').forEach(function (rb) {
+      rb.checked = false;
+   });
+
+   // Clear textarea
+   popup.querySelectorAll("textarea").forEach(function (ta) {
+      ta.value = "";
+   });
+
+   // Clear time inputs (date inputs NOT reset — they come from sessionStorage)
+   popup.querySelectorAll(".departure-time-input").forEach(function (input) {
+      input.value = "";
+      input.style.border = "";
+   });
+
+   // Re-enable submit button
+   const submitBtn = document.getElementById("submit_task");
+   if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Start My Smart Match";
+   }
+}
+//? --- Smart Match Form Reset End ---
+
 //? --- Banner button click handlers Start ---
 const smtPopup = document.querySelector(".smt_popup");
 const smartMatchRequest = document.getElementById("smartMatchRequest");
@@ -3136,6 +3173,25 @@ document.querySelectorAll(".apPopClose").forEach(function (btn) {
 });
 //? --- Close button handler End ---
 
+//? --- Confirmation Buttons Start ---
+// Common close function
+function closeSmtPopup() {
+   if (smtPopup) smtPopup.style.display = "none";
+   document.body.style.overflow = "auto";
+   smtPopup
+      .querySelectorAll(".smt_match_request, .stepOne")
+      .forEach(function (el) {
+         el.style.display = "none";
+      });
+}
+
+// Both confirmation buttons close the popup
+["smart_ok", "smart_close"].forEach(function (id) {
+   const btn = document.getElementById(id);
+   if (btn) btn.addEventListener("click", closeSmtPopup);
+});
+//? --- Confirmation Buttons End ---
+
 //? --- Proceed to Step One handlers Start ---
 const stepOne = document.getElementById("stepOne");
 
@@ -3146,7 +3202,7 @@ document
          e.preventDefault();
          // Check if user is logged in
          const userEmail = Cookies.get("userEmail");
-         var authToken = Cookies.get("authToken");
+         const authToken = Cookies.get("authToken");
          if (!userEmail || !authToken) {
             // Not logged in — hide smart match popup and show login popup
             if (smtPopup) smtPopup.style.display = "none";
@@ -4067,6 +4123,7 @@ function submitSmartMatch() {
             if (stepSix) stepSix.style.display = "none";
             if (confirmStep) confirmStep.style.display = "block";
             showSmtToast("Smart Match request submitted successfully!");
+            resetSmartMatchForm();
          } else {
             showSmtToast("Something went wrong. Please try again.");
          }
@@ -4080,7 +4137,7 @@ function submitSmartMatch() {
 }
 
 // Attach click handler to Submit button
-var smSubmitBtn = document.getElementById("submit_task");
+const smSubmitBtn = document.getElementById("submit_task");
 if (smSubmitBtn) {
    smSubmitBtn.addEventListener("click", function (e) {
       e.preventDefault();

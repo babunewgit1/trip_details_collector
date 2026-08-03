@@ -239,6 +239,7 @@
    position: relative;
    top: -2px;
    transition: border-color 0.2s ease;
+   pointer-events: none;
 }
 
 .apso_custom_radio::after {
@@ -415,6 +416,7 @@
    position: relative;
    top: -1px;
    transition: all 0.2s ease;
+   pointer-events: none;
 }
 
 .step3_custom_checkbox::after {
@@ -445,10 +447,10 @@
    font-size: 17px;
    color: #1e1e1e;
    font-weight: normal;
+   pointer-events: none;
 }
 
 .step3_checkbox_item input[type="checkbox"]:checked ~ .step3_checkbox_text {
-   color: #1e1e1e;
    font-weight: 600;
 }
 
@@ -519,15 +521,16 @@
 }
 
 .step6_chip_text {
-   display: inline-block;
+   display: block;
    padding: 10px 22px;
    border-radius: 50px;
    background-color: #fafafa;
    font-size: 15px;
-   color: #999;
+   color: #1e1e1e;
    border: 1px solid #e8e8e8;
    cursor: default;
    user-select: none;
+   text-align: center;
 }
 
 .submit_task {
@@ -706,4 +709,468 @@
 .stepFiveDateWrapper {
    max-width: 700px;
    margin: auto;
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+   .smt_match_request,
+   .stepOne {
+      width: calc(100% - 20px);
+      max-height: calc(100dvh - 30px);
+      margin: auto;
+   }
+
+   .smt_mr_heading {
+      padding: 15px;
+   }
+
+   .smt_mr_cnt {
+      padding: 35px 15px;
+   }
+
+   .smt_mr_heading h4 {
+      font-size: 18px;
+   }
+
+   .smt_mr_cnt_icon img {
+      width: 110px;
+   }
+
+   .smt_mr_text p {
+      font-size: 16px;
+      margin-top: 12px;
+      line-height: 22px;
+   }
+
+   .smt_mr_cnt_icon {
+      margin-bottom: 25px;
+      margin-top: 30px;
+   }
+
+   .prc_to_match,
+   .ap_continue_btn {
+      margin-top: 25px;
+   }
+
+   .apso_banner img {
+      display: block;
+      width: 100%;
+      border-radius: 10px;
+      height: 180px;
+      object-fit: cover;
+      object-position: top right;
+   }
+
+   .apso_banner_text {
+      position: absolute;
+      width: calc(100% - 20px);
+      height: calc(100% - 20px);
+      left: 50%;
+      bottom: auto;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+   }
+
+   .apso_class_radio_wrapper {
+      grid-template-columns: repeat(2, 1fr);
+   }
+
+   .apsoh_bar {
+      display: none;
+   }
+
+   .apso_class_heading {
+      display: block;
+      padding: 0px 15px;
+      display: block;
+      margin-top: 25px;
+      text-align: center;
+      margin-bottom: 14px;
+   }
+
+   .apso_class_heading h3 {
+      white-space: normal;
+      line-height: 25px;
+   }
+
+   .apso_banner_text p {
+      font-size: 16px;
+      margin-top: 10px;
+      line-height: 18px;
+   }
+
+   .apso_banner_text h4 {
+      margin-top: 16px;
+      line-height: 18px;
+   }
+
+   .stepOne_wrapper {
+      padding: 20px 15px 30px 15px;
+   }
+
+   .ap_pagiantion {
+      margin-top: 25px;
+   }
+
+   .ap_pagiantion button {
+      height: 50px;
+   }
+
+   .apso_step_item_text p {
+      font-size: 14px;
+      margin-bottom: 3px;
+   }
+
+   .apso_step_bar {
+      height: 4px;
+   }
+
+   .apso_step_item_text img {
+      width: 15px;
+      top: -2px;
+      position: relative;
+   }
+
+   .step2_radio_item {
+      align-items: flex-start;
+   }
+
+   .step2rdobox_wrapper,
+   .step3checkboxwrapper,
+   .step4_radio_wrapper,
+   .step4_checkbox_wrapper {
+      grid-template-columns: repeat(2, 1fr);
+      display: grid;
+   }
+
+   .step4_radio_wrapper,
+   .step4_checkbox_wrapper {
+      gap: 8px;
+   }
+
+   .apso_custom_radio {
+      top: 1px;
+   }
+
+   .step3_checkbox_item {
+      align-items: flex-start;
+   }
+
+   .apso_radio_label {
+      align-items: flex-start;
+   }
+
+   #stepSix {
+      background-image: url("https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a70602af7fdfc34703b76a1_last_mb_img.avif");
+      padding-bottom: 112px;
+   }
+
+   html.w-mod-touch #stepSix {
+      background-attachment: local !important;
+   }
+
+   .step6cnt textarea {
+      border-radius: 8px;
+      padding: 10px;
+   }
+
+   .apsoh_bar {
+      display: none;
+   }
+
+   .constep_grid_block,
+   .con_check_step_wrapper {
+      grid-template-columns: 1fr;
+   }
+
+   .cng_item img {
+      height: 320px;
+      object-fit: cover;
+      object-position: top center;
+   }
+
+   .cng_item_text {
+      padding: 15px;
+   }
+
+   .cng_item_text h4 {
+      font-size: 20px;
+   }
+
+   .con_check_step_wrapper {
+      gap: 8px;
+   }
+
+   .con_need_help {
+      margin-top: 30px;
+   }
+
+   .con_need_help ul {
+      margin: 20px 0px;
+      flex-direction: column;
+      row-gap: 10px;
+   }
+
+   .con_need_button {
+      flex-direction: column;
+      gap: 10px;
+   }
+
+   .smt_mr_cnt.px30 {
+      padding: 0;
+   }
+
+   .step6_block_para {
+      justify-content: flex-start;
+      text-align: left;
+   }
+
+   .step6_feature {
+      max-width: 280px;
+      margin: auto;
+   }
+
+   .apso_step {
+      column-gap: 5px;
+   }
+
+   .con_check_step_item p {
+      margin-top: 0;
+      line-height: 18px;
+   }
+}
+
+@media screen and (max-width: 576px) {
+   .smt_match_request,
+   .stepOne {
+      width: calc(100% - 20px);
+      max-height: calc(100dvh - 30px);
+      margin: auto;
+   }
+
+   .smt_mr_heading {
+      padding: 15px;
+   }
+
+   .smt_mr_cnt {
+      padding: 35px 15px;
+   }
+
+   .smt_mr_heading h4 {
+      font-size: 18px;
+   }
+
+   .smt_mr_cnt_icon img {
+      width: 110px;
+   }
+
+   .smt_mr_text p {
+      font-size: 16px;
+      margin-top: 12px;
+      line-height: 22px;
+   }
+
+   .smt_mr_cnt_icon {
+      margin-bottom: 25px;
+      margin-top: 30px;
+   }
+
+   .prc_to_match,
+   .ap_continue_btn {
+      margin-top: 25px;
+   }
+
+   .apso_banner img {
+      display: block;
+      width: 100%;
+      border-radius: 10px;
+      height: 180px;
+      object-fit: cover;
+      object-position: top right;
+   }
+
+   .apso_banner_text {
+      position: absolute;
+      width: calc(100% - 20px);
+      height: calc(100% - 20px);
+      left: 50%;
+      bottom: auto;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+   }
+
+   .apso_class_radio_wrapper {
+      grid-template-columns: repeat(2, 1fr);
+   }
+
+   .apsoh_bar {
+      display: none;
+   }
+
+   .apso_class_heading {
+      display: block;
+      padding: 0px 15px;
+      display: block;
+      margin-top: 25px;
+      text-align: center;
+      margin-bottom: 14px;
+   }
+
+   .apso_class_heading h3 {
+      white-space: normal;
+      line-height: 25px;
+   }
+
+   .apso_banner_text p {
+      font-size: 16px;
+      margin-top: 10px;
+      line-height: 18px;
+   }
+
+   .apso_banner_text h4 {
+      margin-top: 16px;
+      line-height: 18px;
+   }
+
+   .stepOne_wrapper {
+      padding: 20px 15px 30px 15px;
+   }
+
+   .ap_pagiantion {
+      margin-top: 25px;
+   }
+
+   .ap_pagiantion button {
+      height: 50px;
+   }
+
+   .apso_step_item_text p {
+      font-size: 14px;
+      margin-bottom: 3px;
+   }
+
+   .apso_step_bar {
+      height: 4px;
+   }
+
+   .apso_step_item_text img {
+      width: 15px;
+      top: -2px;
+      position: relative;
+   }
+
+   .step2_radio_item {
+      align-items: flex-start;
+   }
+
+   .step2rdobox_wrapper,
+   .step3checkboxwrapper,
+   .step4_radio_wrapper,
+   .step4_checkbox_wrapper {
+      grid-template-columns: repeat(2, 1fr);
+      display: grid;
+   }
+
+   .step4_radio_wrapper,
+   .step4_checkbox_wrapper {
+      gap: 8px;
+   }
+
+   .apso_custom_radio {
+      top: 1px;
+   }
+
+   .step3_checkbox_item {
+      align-items: flex-start;
+   }
+
+   .apso_radio_label {
+      align-items: flex-start;
+   }
+
+   #stepSix {
+      background-image: url("https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a70602af7fdfc34703b76a1_last_mb_img.avif");
+      padding-bottom: 112px;
+   }
+
+   html.w-mod-touch #stepSix {
+      background-attachment: local !important;
+   }
+
+   .step6cnt textarea {
+      border-radius: 8px;
+      padding: 10px;
+   }
+
+   .apsoh_bar {
+      display: none;
+   }
+
+   .constep_grid_block,
+   .con_check_step_wrapper {
+      grid-template-columns: 1fr;
+   }
+
+   .cng_item img {
+      height: 320px;
+      object-fit: cover;
+      object-position: top center;
+   }
+
+   .cng_item_text {
+      padding: 15px;
+   }
+
+   .cng_item_text h4 {
+      font-size: 20px;
+   }
+
+   .con_check_step_wrapper {
+      gap: 8px;
+   }
+
+   .con_need_help {
+      margin-top: 30px;
+   }
+
+   .con_need_help ul {
+      margin: 20px 0px;
+      flex-direction: column;
+      row-gap: 10px;
+   }
+
+   .con_need_button {
+      flex-direction: column;
+      gap: 10px;
+   }
+
+   .smt_mr_cnt.px30 {
+      padding: 0;
+   }
+
+   .step6_block_para {
+      justify-content: flex-start;
+      text-align: left;
+   }
+
+   .step6_feature {
+      max-width: 280px;
+      margin: auto;
+   }
+
+   .apso_step {
+      column-gap: 5px;
+   }
+
+   .con_check_step_item p {
+      margin-top: 0;
+      line-height: 18px;
+   }
 }
