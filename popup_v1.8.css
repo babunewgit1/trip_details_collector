@@ -91,7 +91,7 @@
    background-color: #f3f3f3;
    position: fixed;
    width: 100%;
-   height: calc(100vh - 62.2px);
+   height: calc(100dvh - 62.2px);
    left: 0;
    bottom: 0px;
    z-index: 992;
@@ -315,7 +315,7 @@
    background-color: #f3f3f3;
    position: fixed;
    width: 100%;
-   height: calc(100vh - 62.2px);
+   height: calc(100dvh - 62.2px);
    left: 0;
    bottom: 0;
    z-index: 997;
@@ -2262,4 +2262,1188 @@ html.w-mod-touch .dt_popup {
 
 /*===========================================================
            Trip Details Collector popup code End
+=========================================================== */
+
+/* ===========================================================
+            Smart Match Popup start
+=========================================================== */
+.smt_popup {
+   position: fixed;
+   width: 100%;
+   height: 100vh;
+   background-color: rgba(0, 0, 0, 0.6);
+   left: 0;
+   top: 0;
+   backdrop-filter: blur(5px);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 999;
+   opacity: 1;
+   transition:
+      opacity 0.4s ease,
+      transform 0.4s ease;
+}
+
+.smt_match_request,
+.stepOne {
+   width: 1000px;
+   background-color: #fff;
+   border-radius: 10px;
+   max-height: 95dvh;
+   overflow: auto;
+}
+
+.smt_mr_heading {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   background-color: #f3f3f3;
+   padding: 16px 20px;
+   border-radius: 10px 10px 0px 0px;
+}
+
+.smt_mr_heading h4 {
+   font-size: 20px;
+   letter-spacing: 0.5px;
+   color: #03141b;
+   text-transform: uppercase;
+}
+
+.smt_mr_heading button {
+   display: inline-block;
+   background-color: transparent;
+   padding: 0;
+   border: 0;
+   outline: o;
+   cursor: pointer;
+   transition: all 0.2s ease;
+}
+
+.smt_mr_heading button img {
+   display: inline-block;
+   width: 16px;
+}
+
+.smt_mr_heading button:hover {
+   opacity: 0.7;
+}
+
+.smt_mr_cnt {
+   padding: 60px 90px;
+}
+
+.smt_mr_cnt_icon {
+   margin-bottom: 36px;
+}
+
+.smt_mr_cnt_icon img {
+   display: block;
+   width: 160px;
+   margin: auto;
+}
+
+.smt_mr_text {
+   text-align: center;
+}
+
+.smt_mr_text p {
+   font-size: 20px;
+   color: #1e1e1e;
+   margin-top: 18px;
+   line-height: 26px;
+}
+
+.prc_to_match,
+.ap_continue_btn {
+   margin-top: 30px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.stepOne_wrapper {
+   padding: 20px 20px 60px 20px;
+}
+
+.apso_step {
+   display: grid;
+   grid-template-columns: repeat(6, 1fr);
+   column-gap: 10px;
+   align-items: flex-end;
+}
+
+.apso_step_item_text p {
+   font-size: 17px;
+   color: #8c8c8c;
+   margin-bottom: 5px;
+   font-weight: 600;
+}
+
+.apso_step_bar {
+   width: 100%;
+   height: 6px;
+   background-color: #e9e9e9;
+}
+
+.apcurrent_item .apso_step_bar {
+   background-color: #262626;
+}
+
+.apso_banner {
+   margin-top: 16px;
+   position: relative;
+}
+
+.apso_banner img {
+   display: block;
+   width: 100%;
+   border-radius: 10px;
+}
+
+.apso_banner_text {
+   position: absolute;
+   width: calc(100% - 20px);
+   left: 50%;
+   bottom: 10px;
+   transform: translate(-50%, 0%);
+   background-color: rgba(30, 30, 30, 0.6);
+   border-radius: 12px;
+   padding: 12px 26px;
+   border-left: 4px solid #ff5d48;
+}
+
+.apso_banner_text h4 {
+   color: #fff;
+   font-size: 18px;
+   font-weight: bold;
+}
+
+.apso_banner_text p {
+   font-size: 18px;
+   color: #fff;
+   margin-top: 4px;
+}
+
+.apso_class_heading {
+   padding: 0px 25px;
+   margin: 50px 0px;
+   margin-bottom: 30px;
+}
+
+.apso_class_heading {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 10px;
+}
+
+.apsoh_bar {
+   width: 100%;
+   height: 3px;
+   background-color: #f3f3f3;
+   flex: 1 1 auto;
+}
+
+.apso_class_heading h3 {
+   font-size: 20px;
+   color: #1e1e1e;
+   text-transform: uppercase;
+   white-space: nowrap;
+   letter-spacing: 0.5px;
+   flex-shrink: 0;
+}
+
+/* Radio Button Grid */
+.apso_class_radio_wrapper {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 16px;
+   max-width: 730px;
+   margin: auto;
+}
+
+.apso_radio_item input[type="radio"],
+.apso_radio_item input[type="checkbox"] {
+   display: none;
+}
+
+.apso_radio_img {
+   width: 100%;
+   border-radius: 10px;
+   overflow: hidden;
+   margin-bottom: 10px;
+}
+
+.apso_radio_img img {
+   display: block;
+   width: 100%;
+   height: auto;
+   aspect-ratio: 2/1;
+   object-fit: cover;
+   transition: transform 0.3s ease;
+}
+
+.apso_radio_item:hover .apso_radio_img img {
+   transform: scale(1.1);
+}
+
+.apso_radio_label {
+   display: flex;
+   align-items: center;
+   gap: 6px;
+}
+
+.apso_radio_item {
+   cursor: pointer;
+}
+
+.apso_custom_radio {
+   width: 16px;
+   height: 16px;
+   min-width: 16px;
+   border-radius: 50%;
+   border: 2px solid #ccc;
+   display: inline-block;
+   position: relative;
+   top: -2px;
+   transition: border-color 0.2s ease;
+   pointer-events: none;
+}
+
+.apso_custom_radio::after {
+   content: "";
+   width: 8px;
+   height: 8px;
+   border-radius: 50%;
+   background-color: #ff5d48;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%) scale(0);
+   transition: transform 0.2s ease;
+}
+
+.apso_radio_item input[type="radio"]:checked ~ .apso_custom_radio,
+.apso_radio_item input[type="checkbox"]:checked ~ .apso_custom_radio {
+   border-color: #ff5d48;
+}
+
+.apso_radio_item input[type="radio"]:checked ~ .apso_custom_radio::after,
+.apso_radio_item input[type="checkbox"]:checked ~ .apso_custom_radio::after {
+   transform: translate(-50%, -50%) scale(1);
+}
+
+.apso_radio_text {
+   font-size: 14px;
+   font-weight: 700;
+   letter-spacing: 0.5px;
+   color: #333;
+   text-transform: uppercase;
+}
+
+.apso_radio_item input[type="radio"]:checked ~ .apso_radio_text,
+.apso_radio_item input[type="checkbox"]:checked ~ .apso_radio_text {
+   color: #ff5d48;
+}
+
+.ap_pagiantion {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-top: 40px;
+   column-gap: 12px;
+}
+
+.ap_pagiantion button {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background-color: transparent;
+   outline: none;
+   padding: 0;
+   border: 1px solid #ff5d48;
+   border-radius: 10px;
+   font-size: 16px;
+   color: #020d12;
+   font-weight: 600;
+   gap: 16px;
+   text-transform: uppercase;
+   width: 125px;
+   height: 55px;
+   transition: all 0.3s ease;
+}
+
+.ap_pagiantion button:hover {
+   background-color: #ff5d48;
+   color: #fff;
+}
+
+.ap_pagiantion button img {
+   display: inline-block;
+   width: 8px;
+   position: relative;
+   top: -2px;
+   transition: all 0.3s ease;
+}
+
+.ap_pagiantion button:hover img {
+   filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%)
+      hue-rotate(93deg) brightness(103%) contrast(103%);
+}
+
+.apcompleted .apso_step_bar {
+   background-color: #262626;
+}
+
+.apcompleted .apso_step_item_text {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.apso_step_item_text img {
+   display: inline-block;
+   width: 20px;
+}
+
+/* Step 2 Budget Radio */
+.step2rdobox_wrapper {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   max-width: 850px;
+   margin: auto;
+   column-gap: 20px;
+   row-gap: 5px;
+}
+
+.step2_radio_item {
+   display: flex;
+   align-items: center;
+   gap: 6px;
+   cursor: pointer;
+}
+
+.step2_radio_item input[type="radio"] {
+   display: none;
+}
+
+.step2_radio_text {
+   font-size: 17px;
+   color: #1e1e1e;
+   font-weight: normal;
+}
+
+.step2_radio_item input[type="radio"]:checked ~ .apso_custom_radio {
+   border-color: #ff5d48;
+}
+
+.step2_radio_item input[type="radio"]:checked ~ .apso_custom_radio::after {
+   transform: translate(-50%, -50%) scale(1);
+}
+
+.step2_radio_item input[type="radio"]:checked ~ .step2_radio_text {
+   color: #ff5d48;
+   font-weight: 600;
+}
+
+/* Disabled budget option styling */
+.step2_radio_item.disabled_budget {
+   opacity: 0.4;
+   cursor: not-allowed;
+   pointer-events: none;
+}
+
+/* Step 3 Checkbox */
+.step3checkboxwrapper {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   max-width: 100%;
+   margin: auto;
+   column-gap: 20px;
+   row-gap: 8px;
+}
+
+.step3_checkbox_item {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   cursor: pointer;
+}
+
+.step3_checkbox_item input[type="checkbox"] {
+   display: none;
+}
+
+.step3_custom_checkbox {
+   width: 18px;
+   height: 18px;
+   min-width: 18px;
+   border-radius: 4px;
+   border: 2px solid #ccc;
+   display: inline-block;
+   position: relative;
+   top: -1px;
+   transition: all 0.2s ease;
+   pointer-events: none;
+}
+
+.step3_custom_checkbox::after {
+   content: "";
+   width: 5px;
+   height: 10px;
+   border: solid #fff;
+   border-width: 0 2px 2px 0;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -60%) rotate(45deg) scale(0);
+   transition: transform 0.2s ease;
+}
+
+.step3_checkbox_item input[type="checkbox"]:checked ~ .step3_custom_checkbox {
+   background-color: #ff5d48;
+   border-color: #ff5d48;
+}
+
+.step3_checkbox_item
+   input[type="checkbox"]:checked
+   ~ .step3_custom_checkbox::after {
+   transform: translate(-50%, -60%) rotate(45deg) scale(1);
+}
+
+.step3_checkbox_text {
+   font-size: 17px;
+   color: #1e1e1e;
+   font-weight: normal;
+   pointer-events: none;
+}
+
+.step3_checkbox_item input[type="checkbox"]:checked ~ .step3_checkbox_text {
+   font-weight: 600;
+}
+
+.step4_radio_wrapper {
+   display: flex;
+   justify-content: center;
+   gap: 40px;
+}
+
+.step4_checkbox_wrapper {
+   display: flex;
+   justify-content: center;
+   gap: 30px;
+}
+
+/* Step 6 Selectable Chips */
+.step6cnt {
+   margin-top: 40px;
+   max-width: 700px;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.step6cnt > p {
+   font-size: 20px;
+   color: #1e1e1e;
+   font-weight: 600;
+   margin-bottom: 20px;
+   text-align: center;
+}
+
+.step6cnt textarea {
+   display: block;
+   width: 100%;
+   height: 100px;
+   border-radius: 8px;
+   border: 1px solid #dcdcdc;
+   resize: none;
+   padding: 18px;
+   font-size: 16px;
+   color: #8b8a8a;
+   outline: none;
+}
+
+.step6cnt_selectable {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   column-gap: 10px;
+   margin-top: 20px;
+   row-gap: 8px;
+}
+
+.step6_example_title {
+   text-align: center;
+   font-size: 18px;
+   letter-spacing: 0.6px;
+   color: #333;
+   font-weight: 600;
+   margin-bottom: 5px;
+}
+
+.step6_chips_wrapper {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 8px;
+}
+
+.step6_chip_text {
+   display: block;
+   padding: 10px 22px;
+   border-radius: 50px;
+   background-color: #fafafa;
+   font-size: 15px;
+   color: #1e1e1e;
+   border: 1px solid #e8e8e8;
+   cursor: default;
+   user-select: none;
+   text-align: center;
+}
+
+.submit_task {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-top: 30px;
+}
+
+.step6_block_para {
+   display: flex;
+   align-items: flex-start;
+   justify-content: center;
+   column-gap: 10px;
+   text-align: center;
+   margin-top: 25px;
+}
+
+.step6_block_para p {
+   font-size: 17px;
+   color: #1e1e1e;
+   line-height: 22px;
+}
+
+.step6_block_para img {
+   display: inline-block;
+   width: 18px;
+}
+
+.step6_feature {
+   max-width: 570px;
+   margin: auto;
+}
+
+#stepSix {
+   background-image: url("https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a6cbaa97c95fa2ce766333e_bg.avif");
+   background-repeat: no-repeat;
+   background-size: 100% 100%;
+   background-position: bottom;
+   padding-bottom: 200px;
+   background-attachment: local;
+}
+
+.px30 {
+   padding: 40px 0px;
+   padding-bottom: 0;
+}
+
+.constep_grid_block {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   gap: 10px;
+}
+
+.cng_item {
+   position: relative;
+}
+
+.cng_item img {
+   display: block;
+   width: 100%;
+   border-radius: 8px;
+}
+
+.cng_item_text {
+   position: absolute;
+   width: 100%;
+   left: 0;
+   bottom: 0;
+   padding: 26px;
+   padding-right: 40px;
+   color: #fff;
+   text-align: left;
+}
+
+.cng_item_text p {
+   color: #fff;
+   font-size: 15px;
+   line-height: 1.3;
+   margin-top: 6px;
+}
+
+.cng_item_text h4 {
+   font-size: 22px;
+   color: #fff;
+   text-transform: uppercase;
+}
+
+.con_check_step_wrapper {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 15px;
+}
+
+.con_check_step_item {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   border: 1px solid #dcdcdc;
+   border-radius: 8px;
+   padding: 8px 16px;
+}
+
+.con_check_step_item img {
+   flex-shrink: 0;
+   display: inline-block;
+   width: 16px;
+}
+
+.con_check_step_item p {
+   font-size: 17px;
+   color: #1e1e1e;
+   margin-top: 0;
+   text-align: left;
+   line-height: 1.2;
+}
+
+.con_need_help {
+   margin-top: 40px;
+}
+
+.con_need_help p {
+   font-size: 17px;
+   color: #1e1e1e;
+   margin-top: 20px;
+}
+
+.con_need_help ul {
+   list-style-type: none;
+   padding: 0;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   column-gap: 30px;
+   margin: 30px 0px;
+}
+
+.con_need_help ul li a {
+   display: inline-block;
+   font-size: 18px;
+   color: #1e1e1e;
+   letter-spacing: 0.5px;
+   font-weight: 600;
+   text-transform: uppercase;
+   display: flex;
+   align-items: center;
+   column-gap: 10px;
+   transition: all 0.3s ease;
+}
+
+.con_need_help ul li a:hover {
+   opacity: 0.7;
+}
+
+.con_need_help ul li a img {
+   display: inline-block;
+   width: 20px;
+}
+
+.con_need_button {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   column-gap: 10px;
+}
+
+#smart_close:hover {
+   color: #fff;
+}
+
+.ap_how_button a:hover {
+   background-color: #ff5d47 !important;
+   border-color: #ff5d47 !important;
+}
+
+.stepFiveDateWrapper {
+   max-width: 700px;
+   margin: auto;
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+   .smt_match_request,
+   .stepOne {
+      width: calc(100% - 20px);
+      max-height: calc(100dvh - 30px);
+      margin: auto;
+   }
+
+   .smt_mr_heading {
+      padding: 15px;
+   }
+
+   .smt_mr_cnt {
+      padding: 35px 15px;
+   }
+
+   .smt_mr_heading h4 {
+      font-size: 18px;
+   }
+
+   .smt_mr_cnt_icon img {
+      width: 110px;
+   }
+
+   .smt_mr_text p {
+      font-size: 16px;
+      margin-top: 12px;
+      line-height: 22px;
+   }
+
+   .smt_mr_cnt_icon {
+      margin-bottom: 25px;
+      margin-top: 30px;
+   }
+
+   .prc_to_match,
+   .ap_continue_btn {
+      margin-top: 25px;
+   }
+
+   .apso_banner img {
+      display: block;
+      width: 100%;
+      border-radius: 10px;
+      height: 180px;
+      object-fit: cover;
+      object-position: top right;
+   }
+
+   .apso_banner_text {
+      position: absolute;
+      width: calc(100% - 20px);
+      height: calc(100% - 20px);
+      left: 50%;
+      bottom: auto;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+   }
+
+   .apso_class_radio_wrapper {
+      grid-template-columns: repeat(2, 1fr);
+   }
+
+   .apsoh_bar {
+      display: none;
+   }
+
+   .apso_class_heading {
+      display: block;
+      padding: 0px 15px;
+      display: block;
+      margin-top: 25px;
+      text-align: center;
+      margin-bottom: 14px;
+   }
+
+   .apso_class_heading h3 {
+      white-space: normal;
+      line-height: 25px;
+   }
+
+   .apso_banner_text p {
+      font-size: 16px;
+      margin-top: 10px;
+      line-height: 18px;
+   }
+
+   .apso_banner_text h4 {
+      margin-top: 16px;
+      line-height: 18px;
+   }
+
+   .stepOne_wrapper {
+      padding: 20px 15px 30px 15px;
+   }
+
+   .ap_pagiantion {
+      margin-top: 25px;
+   }
+
+   .ap_pagiantion button {
+      height: 50px;
+   }
+
+   .apso_step_item_text p {
+      font-size: 14px;
+      margin-bottom: 3px;
+   }
+
+   .apso_step_bar {
+      height: 4px;
+   }
+
+   .apso_step_item_text img {
+      width: 15px;
+      top: -2px;
+      position: relative;
+   }
+
+   .step2_radio_item {
+      align-items: flex-start;
+   }
+
+   .step2rdobox_wrapper,
+   .step3checkboxwrapper,
+   .step4_radio_wrapper,
+   .step4_checkbox_wrapper {
+      grid-template-columns: repeat(2, 1fr);
+      display: grid;
+   }
+
+   .step4_radio_wrapper,
+   .step4_checkbox_wrapper {
+      gap: 8px;
+   }
+
+   .apso_custom_radio {
+      top: 1px;
+   }
+
+   .step3_checkbox_item {
+      align-items: flex-start;
+   }
+
+   .apso_radio_label {
+      align-items: flex-start;
+   }
+
+   #stepSix {
+      background-image: url("https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a70602af7fdfc34703b76a1_last_mb_img.avif");
+      padding-bottom: 112px;
+   }
+
+   html.w-mod-touch #stepSix {
+      background-attachment: local !important;
+   }
+
+   .step6cnt textarea {
+      border-radius: 8px;
+      padding: 10px;
+   }
+
+   .apsoh_bar {
+      display: none;
+   }
+
+   .constep_grid_block,
+   .con_check_step_wrapper {
+      grid-template-columns: 1fr;
+   }
+
+   .cng_item img {
+      height: 320px;
+      object-fit: cover;
+      object-position: top center;
+   }
+
+   .cng_item_text {
+      padding: 15px;
+   }
+
+   .cng_item_text h4 {
+      font-size: 20px;
+   }
+
+   .con_check_step_wrapper {
+      gap: 8px;
+   }
+
+   .con_need_help {
+      margin-top: 30px;
+   }
+
+   .con_need_help ul {
+      margin: 20px 0px;
+      flex-direction: column;
+      row-gap: 10px;
+   }
+
+   .con_need_button {
+      flex-direction: column;
+      gap: 10px;
+   }
+
+   .smt_mr_cnt.px30 {
+      padding: 0;
+   }
+
+   .step6_block_para {
+      justify-content: flex-start;
+      text-align: left;
+   }
+
+   .step6_feature {
+      max-width: 280px;
+      margin: auto;
+   }
+
+   .apso_step {
+      column-gap: 5px;
+   }
+
+   .con_check_step_item p {
+      margin-top: 0;
+      line-height: 18px;
+   }
+}
+
+@media screen and (max-width: 576px) {
+   .smt_match_request,
+   .stepOne {
+      width: calc(100% - 20px);
+      max-height: calc(100dvh - 30px);
+      margin: auto;
+   }
+
+   .smt_mr_heading {
+      padding: 15px;
+   }
+
+   .smt_mr_cnt {
+      padding: 35px 15px;
+   }
+
+   .smt_mr_heading h4 {
+      font-size: 18px;
+   }
+
+   .smt_mr_cnt_icon img {
+      width: 110px;
+   }
+
+   .smt_mr_text p {
+      font-size: 16px;
+      margin-top: 12px;
+      line-height: 22px;
+   }
+
+   .smt_mr_cnt_icon {
+      margin-bottom: 25px;
+      margin-top: 30px;
+   }
+
+   .prc_to_match,
+   .ap_continue_btn {
+      margin-top: 25px;
+   }
+
+   .apso_banner img {
+      display: block;
+      width: 100%;
+      border-radius: 10px;
+      height: 180px;
+      object-fit: cover;
+      object-position: top right;
+   }
+
+   .apso_banner_text {
+      position: absolute;
+      width: calc(100% - 20px);
+      height: calc(100% - 20px);
+      left: 50%;
+      bottom: auto;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+   }
+
+   .apso_class_radio_wrapper {
+      grid-template-columns: repeat(2, 1fr);
+   }
+
+   .apsoh_bar {
+      display: none;
+   }
+
+   .apso_class_heading {
+      display: block;
+      padding: 0px 15px;
+      display: block;
+      margin-top: 25px;
+      text-align: center;
+      margin-bottom: 14px;
+   }
+
+   .apso_class_heading h3 {
+      white-space: normal;
+      line-height: 25px;
+   }
+
+   .apso_banner_text p {
+      font-size: 16px;
+      margin-top: 10px;
+      line-height: 18px;
+   }
+
+   .apso_banner_text h4 {
+      margin-top: 16px;
+      line-height: 18px;
+   }
+
+   .stepOne_wrapper {
+      padding: 20px 15px 30px 15px;
+   }
+
+   .ap_pagiantion {
+      margin-top: 25px;
+   }
+
+   .ap_pagiantion button {
+      height: 50px;
+   }
+
+   .apso_step_item_text p {
+      font-size: 14px;
+      margin-bottom: 3px;
+   }
+
+   .apso_step_bar {
+      height: 4px;
+   }
+
+   .apso_step_item_text img {
+      width: 15px;
+      top: -2px;
+      position: relative;
+   }
+
+   .step2_radio_item {
+      align-items: flex-start;
+   }
+
+   .step2rdobox_wrapper,
+   .step3checkboxwrapper,
+   .step4_radio_wrapper,
+   .step4_checkbox_wrapper {
+      grid-template-columns: repeat(2, 1fr);
+      display: grid;
+   }
+
+   .step4_radio_wrapper,
+   .step4_checkbox_wrapper {
+      gap: 8px;
+   }
+
+   .apso_custom_radio {
+      top: 1px;
+   }
+
+   .step3_checkbox_item {
+      align-items: flex-start;
+   }
+
+   .apso_radio_label {
+      align-items: flex-start;
+   }
+
+   #stepSix {
+      background-image: url("https://cdn.prod.website-files.com/6713759f858863c516dbaa19/6a70602af7fdfc34703b76a1_last_mb_img.avif");
+      padding-bottom: 112px;
+   }
+
+   html.w-mod-touch #stepSix {
+      background-attachment: local !important;
+   }
+
+   .step6cnt textarea {
+      border-radius: 8px;
+      padding: 10px;
+   }
+
+   .apsoh_bar {
+      display: none;
+   }
+
+   .constep_grid_block,
+   .con_check_step_wrapper {
+      grid-template-columns: 1fr;
+   }
+
+   .cng_item img {
+      height: 320px;
+      object-fit: cover;
+      object-position: top center;
+   }
+
+   .cng_item_text {
+      padding: 15px;
+   }
+
+   .cng_item_text h4 {
+      font-size: 20px;
+   }
+
+   .con_check_step_wrapper {
+      gap: 8px;
+   }
+
+   .con_need_help {
+      margin-top: 30px;
+   }
+
+   .con_need_help ul {
+      margin: 20px 0px;
+      flex-direction: column;
+      row-gap: 10px;
+   }
+
+   .con_need_button {
+      flex-direction: column;
+      gap: 10px;
+   }
+
+   .smt_mr_cnt.px30 {
+      padding: 0;
+   }
+
+   .step6_block_para {
+      justify-content: flex-start;
+      text-align: left;
+   }
+
+   .step6_feature {
+      max-width: 280px;
+      margin: auto;
+   }
+
+   .apso_step {
+      column-gap: 5px;
+   }
+
+   .con_check_step_item p {
+      margin-top: 0;
+      line-height: 18px;
+   }
+}
+
+/* ===========================================================
+            Smart Match Popup end
 =========================================================== */
