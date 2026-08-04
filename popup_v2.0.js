@@ -3206,6 +3206,7 @@ document
          if (!userEmail || !authToken) {
             // Not logged in — hide smart match popup and show login popup
             if (smtPopup) smtPopup.style.display = "none";
+            document.body.style.overflow = "auto";
             const authFormsWrapper =
                document.getElementById("authFormsWrapper");
             const loginForm = document.getElementById("loginForm");
