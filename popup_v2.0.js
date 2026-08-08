@@ -4094,8 +4094,6 @@ function submitSmartMatch() {
 
    const payload = collectSmartMatchData();
 
-   console.log("Smart Match Payload:", payload);
-
    const authToken = Cookies.get("authToken") || "";
 
    fetch("https://operators-dashboard.bubbleapps.io/api/1.1/wf/smart_match", {
@@ -4114,8 +4112,6 @@ function submitSmartMatch() {
       .then(function (result) {
          submitBtn.disabled = false;
          submitBtn.textContent = "Start My Smart Match";
-
-         console.log("Smart Match API Response:", result.data);
 
          if (result.ok) {
             // Success — show confirmation step

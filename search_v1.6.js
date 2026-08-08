@@ -719,7 +719,12 @@ function renderPage(page, filteredSets) {
 
    // Only render hot deals if user is logged in and trip is airplane classification
    const isLoggedIn = isUserLoggedIn();
-   if (hotDeals && page === 1 && isLoggedIn && tripClassification === "airplane") {
+   if (
+      hotDeals &&
+      page === 1 &&
+      isLoggedIn &&
+      tripClassification === "airplane"
+   ) {
       hotDeals.forEach((item) => {
          createItemBlock(item, globalIndex, true, fragment, distance, TimeDown);
          globalIndex++;
@@ -4206,8 +4211,6 @@ function initialize() {
       return;
    }
 
-   console.log("Sending API request:", { apiUrl, data });
-
    fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -4218,7 +4221,6 @@ function initialize() {
       .then((response) => response.json())
       .then((responseData) => {
          apiData = responseData;
-         console.log("API Response:", apiData);
          longestFlight = apiData.response.longest_flight_leg;
          flightRequestId = apiData.response.flightrequest;
 
